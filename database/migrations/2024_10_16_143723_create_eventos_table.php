@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('eventos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained();
             $table->string('nombreEvento');
             $table->string('descripcion');
             $table->dateTime('fecha');
