@@ -11,16 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('eventos', function (Blueprint $table) {
+        Schema::create('permisos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id'); 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('nombreEvento');
-            $table->string('descripcion');
-            $table->dateTime('fechaInicio');
-            $table->dateTime('fehcaFin');
-            $table->string('color');
-            $table->boolean('allDay');
+            $table->unsignedBigInteger('event_id'); 
+            $table->foreign('event_id')->references('id')->on('eventos');
+            $table->boolean('asistencia');
+            $table->boolean('verEvento');
+            $table->boolean('invitar');
+            $table->boolean('eliminarIvitado');
+            $table->boolean('modificar');
+            $table->boolean('eliminarEvento');        
             $table->timestamps();
         });
     }
@@ -30,7 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('eventos');
+        Schema::dropIfExists('permisos');
     }
 };
-    
