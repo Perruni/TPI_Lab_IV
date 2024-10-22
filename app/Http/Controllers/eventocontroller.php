@@ -45,7 +45,6 @@ class Eventocontroller extends Controller
         $fechaInicioCompleta = Carbon::parse($request->fechaInicio . ' ' . $request->horaInicio);
         $fechaFinCompleta = Carbon::parse($request->fechaFin . ' ' . $request->horaFin);
         $userId = Auth::id();        
-        dd($userId);
 
         Evento::create([
             'user_id' => $userId,
