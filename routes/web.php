@@ -32,12 +32,14 @@ use App\Http\Controllers\permisoscontroller;
 
 Route::get('/permisos', [permisoscontroller::class, 'index'])->name('evento.detallesevento');
 
-use App\Http\Controllers\eventocontroller;
+use App\Http\Controllers\Eventocontroller;
 use Illuminate\Types\Relations\Role;
 
-Route::get('/evento/miseventos', [eventocontroller::class, 'index'])->name('evento.miseventos');
-Route::get('/evento/nuevoevento',[eventocontroller::class, 'cargar'])->name('evento.cargar');
-Route::get('/evento/guardar',[eventocontroller::class, 'guardar'])->name('evento.guardar');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/eventos', [Eventocontroller::class, 'index'])->name('eventos.index');
+    Route::get('/eventos/cargar', [Eventocontroller::class, 'cargar'])->name('eventos.cargar');
+    Route::post('/eventos/guardar', [Eventocontroller::class, 'guardar'])->name('eventos.guardar');
+});
 
 
 

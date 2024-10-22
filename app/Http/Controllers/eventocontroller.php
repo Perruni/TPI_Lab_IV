@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\evento;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
-class eventocontroller extends Controller
+class Eventocontroller extends Controller
 {
     
 
@@ -22,6 +23,7 @@ class eventocontroller extends Controller
 
     public function cargar(){
         
+
         return view('evento.cargar');
 
     }
@@ -39,16 +41,22 @@ class eventocontroller extends Controller
             'allDay' => 'nullable|boolean', 
         ]);
 
+        
         // Combinar la fecha y la hora para crear el formato de fecha completa
         $fechaInicioCompleta = Carbon::parse($request->fechaInicio . ' ' . $request->horaInicio);
         $fechaFinCompleta = Carbon::parse($request->fechaFin . ' ' . $request->horaFin);
+        $userId = Auth::id();
+
+        if (!$userId) {
+            return redirect()->route('login')->with('error', 'Debes estar autenticado para crear un evento.');
+        }
 
         Evento::create([
-            'user_id' => 1,
+            'user_id' => $userId,
             'nombreEvento' => $request->nombreEvento,
             'descripcion' => $request->descripcion,
             'fechaInicio' => $fechaInicioCompleta,
-            'fehcaFin' => $fechaFinCompleta,
+            'fechaFin' => $fechaFinCompleta,
             'color' => $request->color,
             'allDay' => $request->allDay ? true : false,
         ]);

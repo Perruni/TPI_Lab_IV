@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nombreEvento');
             $table->string('descripcion');
             $table->dateTime('fechaInicio');
-            $table->dateTime('fehcaFin');
+            $table->dateTime('fechaFin');
             $table->string('color');
             $table->boolean('allDay');
             $table->timestamps();

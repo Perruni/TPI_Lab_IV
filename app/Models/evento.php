@@ -13,5 +13,9 @@ class Evento extends Model
     protected $table = 'eventos';
     protected $fillable = ['nombreEvento','descripcion','fechaInicio','fehcaFin','color','allDay'];
 
-    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }
