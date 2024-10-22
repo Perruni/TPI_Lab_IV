@@ -21,8 +21,7 @@ class Eventocontroller extends Controller
     }
 
 
-    public function cargar(){
-        
+    public function cargar(){      
 
         return view('evento.cargar');
 
@@ -45,11 +44,8 @@ class Eventocontroller extends Controller
         // Combinar la fecha y la hora para crear el formato de fecha completa
         $fechaInicioCompleta = Carbon::parse($request->fechaInicio . ' ' . $request->horaInicio);
         $fechaFinCompleta = Carbon::parse($request->fechaFin . ' ' . $request->horaFin);
-        $userId = Auth::id();
-
-        if (!$userId) {
-            return redirect()->route('login')->with('error', 'Debes estar autenticado para crear un evento.');
-        }
+        $userId = Auth::id();        
+        dd($userId);
 
         Evento::create([
             'user_id' => $userId,

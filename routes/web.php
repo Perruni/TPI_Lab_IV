@@ -35,10 +35,10 @@ Route::get('/permisos', [permisoscontroller::class, 'index'])->name('evento.deta
 use App\Http\Controllers\Eventocontroller;
 use Illuminate\Types\Relations\Role;
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/eventos', [Eventocontroller::class, 'index'])->name('eventos.index');
-    Route::get('/eventos/cargar', [Eventocontroller::class, 'cargar'])->name('eventos.cargar');
-    Route::post('/eventos/guardar', [Eventocontroller::class, 'guardar'])->name('eventos.guardar');
+Route::middleware('auth')->group(function () {
+Route::get('/evento/miseventos', [eventocontroller::class, 'index'])->name('evento.miseventos');
+Route::get('/evento/nuevoevento',[eventocontroller::class, 'cargar'])->name('evento.cargar');
+Route::post('/evento/guardar',[eventocontroller::class, 'guardar'])->name('evento.guardar');
 });
 
 
