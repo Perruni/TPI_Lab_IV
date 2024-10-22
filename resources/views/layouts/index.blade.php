@@ -362,7 +362,7 @@
             </button>
           </div>
         </nav>
-        <!-- partial -->
+        <!-- partial ---------------------------------------------------------------CALENDARIO--->
         <div class="main-panel">
           <div class="content-wrapper">
             @yield('content')

@@ -26,3 +26,11 @@ require __DIR__.'/auth.php';
 Route::get('/fullcalendar', function () {
     return view('fullcalendar');
 });
+
+use App\Http\Controllers\EventController;
+
+Route::post('/ruta-para-guardar-evento', [EventController::class, 'store']);
+
+Route::get('/crear-evento', function () {
+    return view('create-event');
+});
