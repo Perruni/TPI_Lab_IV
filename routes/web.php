@@ -27,6 +27,7 @@ Route::get('/fullcalendar', function () {
     return view('fullcalendar');
 });
 
+
 use App\Http\Controllers\permisoscontroller;
 
 Route::get('/permisos', [permisoscontroller::class, 'index'])->name('evento.detallesevento');
@@ -38,4 +39,13 @@ Route::get('/evento/miseventos', [eventocontroller::class, 'index'])->name('even
 Route::get('/evento/nuevoevento',[eventocontroller::class, 'cargar'])->name('evento.cargar');
 Route::get('/evento/guardar',[eventocontroller::class, 'guardar'])->name('evento.guardar');
 
+
+
+use App\Http\Controllers\EventController;
+
+Route::post('/ruta-para-guardar-evento', [EventController::class, 'store']);
+
+Route::get('/crear-evento', function () {
+    return view('create-event');
+});
 
