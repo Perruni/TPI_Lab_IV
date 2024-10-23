@@ -32,9 +32,9 @@ class Eventocontroller extends Controller
     public function guardar(Request $request)
     {
 
-        if (!isset($request->allDay)) {
+        /*if (!isset($request->allDay)) {
             $request->merge(['allDay' => false]); // Es falso si no se envia nada
-        }
+        }*/
 
         $request->validate([
             'nombreEvento' => 'required|string|max:255',
@@ -48,7 +48,6 @@ class Eventocontroller extends Controller
         ]);
 
         
-        // Combinar la fecha y la hora para crear el formato de fecha completa
         $fechaInicioCompleta = Carbon::parse($request->fechaInicio . ' ' . $request->horaInicio);
         $fechaFinCompleta = Carbon::parse($request->fechaFin . ' ' . $request->horaFin);
         $userId = Auth::id();        
@@ -63,19 +62,20 @@ class Eventocontroller extends Controller
             'allDay' => $request->allDay ? true : false,
         ]);
 
-        return redirect()->back()->with('message', 'Evento guardado con éxito.');
+        return redirect()->route('miseventos')->with('message', 'Evento guardado con éxito.');
     }
 
     public function edit($id)
     {
-    $evento = Evento::findOrFail($id);
+        $evento = Evento::findOrFail($id);
+        $userId = Auth::id(); 
 
-    return view('edit', compact('evento'));
+        return view('edit', compact('evento', 'userId'));
     }
 
     public function update(Request $request, $id)
     {
-        $evento = evento::findOrFail($id);
+        $evento = Evento::findOrFail($id);
 
         $validated = $request->validate([
             'nombreEvento' => 'required|string|max:255',
@@ -88,9 +88,19 @@ class Eventocontroller extends Controller
             'allDay' => 'nullable|boolean', 
         ]);
 
-        $evento->update($validated);
+        $fechaInicioCompleta = Carbon::parse($validated['fechaInicio'] . ' ' . $validated['horaInicio']);
+        $fechaFinCompleta = Carbon::parse($validated['fechaFin'] . ' ' . $validated['horaFin']);
 
-        return redirect()->route('index')->with('success', 'Evento actualizado correctamente.');
+        $evento->update([
+            'nombreEvento' => $validated['nombreEvento'],
+            'descripcion' => $validated['descripcion'],
+            'fechaInicio' => $fechaInicioCompleta,
+            'fechaFin' => $fechaFinCompleta,
+            'color' => $validated['color'],
+            'allDay' => $validated['allDay'] ? true : false,
+        ]);
+
+        return redirect()->route('miseventos')->with('success', 'Evento actualizado correctamente.');
     }
     
 
@@ -101,8 +111,17 @@ class Eventocontroller extends Controller
 
         $evento->delete();
 
-        return redirect()->route('index')->with('success', 'Evento eliminado correctamente.');
+        return redirect()->route('miseventos')->with('success', 'Evento eliminado correctamente.');
     }
 
+    public function fullCalendar()
+    {
+        $userId = Auth::id();
+
+        $eventos = Evento::where('user_id', $userId)->get();   
+
+        return view('fullCalendar',['eventos'=> $eventos]);
+
+    }
     
 }

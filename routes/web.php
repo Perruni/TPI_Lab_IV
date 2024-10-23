@@ -23,11 +23,6 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/fullcalendar', function () {
-    return view('fullcalendar');
-});
-
-
 use App\Http\Controllers\permisoscontroller;
 
 Route::get('/permisos', [permisoscontroller::class, 'index'])->name('evento.detallesevento');
@@ -44,11 +39,13 @@ Route::put('/update/{id}',[eventocontroller::class, 'update'])->name('update');
 Route::delete('/borrar/{id}',[eventocontroller::class, 'borrar'])->name('borrar');
 });
 
+Route::middleware('auth')->group(function () {
+    Route::get('/fullcalendar', [Eventocontroller::class, 'fullCalendar'])->name('fullcalendar');
+});
 
 
-use App\Http\Controllers\EventController;
 
-Route::post('/ruta-para-guardar-evento', [EventController::class, 'store']);
+
 
 
 

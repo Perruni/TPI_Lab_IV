@@ -1,9 +1,4 @@
-@extends('layouts.index')
-@section('title','Ingrese los datos del evento')
-
-@section('content')
-
-<form action="{{ route('update', $evento->id) }}" method="POST">
+<form action="{{ $action }}" method="POST" class="custom-form p-5 rounded shadow-lg">
     @csrf
     @method('PUT') 
     
@@ -28,11 +23,11 @@
             <input type="datetime-local" id="fechaFin" name="fechaFin" class="form-control form-control-lg" 
                    value="{{ old('fechaFin', date('Y-m-d\TH:i', strtotime($evento->fechaFin))) }}" required>
         </div>
-    </div>    
+    </div>
 
     <div class="mb-4">
         <label for="color" class="form-label">Color:</label>
-        <input type="color" id="color" name="color" class="form-control form-control-lg" value="{{ old('color', $evento->color) }}">
+        <input type="text" id="color" name="color" class="form-control form-control-lg" value="{{ old('color', $evento->color) }}">
     </div>
 
     <div class="form-check mb-4">
@@ -44,5 +39,3 @@
         <button type="submit" class="btn btn-primary btn-lg">Actualizar Evento</button>
     </div>
 </form>
-
-@endsection

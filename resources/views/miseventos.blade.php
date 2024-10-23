@@ -8,7 +8,6 @@
     <thead>
         <tr>
             <th scope="col">ID</th>
-            <th scope="col">Usuario</th>
             <th scope="col">Nombre del Evento</th>
             <th scope="col">Descripción</th>
             <th scope="col">Fecha de Inicio</th>
@@ -22,7 +21,6 @@
         @foreach($eventos as $evento)
             <tr>
                 <th scope="row">{{ $evento->id }}</th>
-                <td>{{ $evento->user->name }}</td>
                 <td>{{ $evento->nombreEvento }}</td>
                 <td>{{ $evento->descripcion }}</td>
                 <td>{{ $evento->fechaInicio }}</td>
