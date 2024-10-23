@@ -10,6 +10,10 @@ class EventController extends Controller
 {
     public function store(Request $request)
     {
+
+        if (!isset($request->allDay)) {
+            $request->merge(['allDay' => false]); // Es falso si no se envia nada
+        }
         
         $validatedData = $request->validate([
             
