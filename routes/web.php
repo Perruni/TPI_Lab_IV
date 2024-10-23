@@ -36,9 +36,12 @@ use App\Http\Controllers\Eventocontroller;
 use Illuminate\Types\Relations\Role;
 
 Route::middleware('auth')->group(function () {
-Route::get('/evento/miseventos', [eventocontroller::class, 'index'])->name('evento.miseventos');
-Route::get('/evento/nuevoevento',[eventocontroller::class, 'cargar'])->name('evento.cargar');
-Route::post('/evento/guardar',[eventocontroller::class, 'guardar'])->name('evento.guardar');
+Route::get('/miseventos', [eventocontroller::class, 'index'])->name('miseventos');
+Route::get('/nuevoevento',[eventocontroller::class, 'cargar'])->name('cargar');
+Route::post('/guardar',[eventocontroller::class, 'guardar'])->name('guardar');
+Route::get('/{id}/edit', [eventocontroller::class, 'edit'])->name('edit');
+Route::put('/update/{id}',[eventocontroller::class, 'update'])->name('update');
+Route::delete('/borrar/{id}',[eventocontroller::class, 'borrar'])->name('borrar');
 });
 
 

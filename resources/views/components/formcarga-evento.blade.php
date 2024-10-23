@@ -1,4 +1,4 @@
-<form action="{{ route('evento.guardar') }}" method="POST">
+<form action="{{ route('guardar') }}" method="POST">
     @csrf
     <div class="form-group">
         <label for="nombreEvento">Nombre del Evento</label>

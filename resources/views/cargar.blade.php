@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.index')
 @section('title','Ingrese los datos del evento')
 
 @section('content')
