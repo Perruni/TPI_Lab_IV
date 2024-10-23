@@ -46,9 +46,3 @@ Route::delete('/borrar/{id}',[eventocontroller::class, 'borrar'])->name('borrar'
 
 
 
-use App\Http\Controllers\EventController;
-
-Route::post('/ruta-para-guardar-evento', [EventController::class, 'store']);
-
-
-
