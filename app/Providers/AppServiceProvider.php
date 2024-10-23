@@ -18,8 +18,5 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
-    {
-        View::addLocation(resource_path('views/evento'));
-    }
+    
 }

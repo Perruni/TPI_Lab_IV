@@ -31,6 +31,11 @@ class Eventocontroller extends Controller
 
     public function guardar(Request $request)
     {
+
+        if (!isset($request->allDay)) {
+            $request->merge(['allDay' => false]); // Es falso si no se envia nada
+        }
+
         $request->validate([
             'nombreEvento' => 'required|string|max:255',
             'descripcion' => 'required|string',
