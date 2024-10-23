@@ -50,7 +50,5 @@ use App\Http\Controllers\EventController;
 
 Route::post('/ruta-para-guardar-evento', [EventController::class, 'store']);
 
-Route::get('/crear-evento', function () {
-    return view('create-event');
-});
+
 
