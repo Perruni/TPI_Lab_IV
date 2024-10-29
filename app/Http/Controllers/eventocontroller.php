@@ -8,7 +8,7 @@ use App\Models\evento;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
-class Eventocontroller extends Controller
+class eventocontroller extends Controller
 {
     
 
@@ -124,4 +124,16 @@ class Eventocontroller extends Controller
 
     }
     
+    public function mostrarEventos()
+{
+    $eventos = Evento::all(); //Aca iria la logica para ver solo los publicos
+    return view('mostrarEventos', compact('eventos'));
+}
+
+public function EventoDetallado($id)
+{
+    $evento = Evento::findOrFail($id); 
+    return view('EventoDetallado', compact('evento'));
+}
+
 }

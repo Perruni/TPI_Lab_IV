@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Corona Admin</title>
+    <title>Gestor de Eventos</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
@@ -27,8 +27,8 @@
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-          <a class="sidebar-brand brand-logo" href="index.html"><img src="assets/images/logo.svg" alt="logo" /></a>
-          <a class="sidebar-brand brand-logo-mini" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
+          <a class="sidebar-brand brand-logo" href="index.html"><img src="assets/images/logoeventosya.png" alt="logo" style="width: 200px; height: auto;"/></a>
+          <a class="sidebar-brand brand-logo-mini" href="index.html"><img src="assets/images/logoeventosyamini.png" alt="logo"style="width: 50px; height: 30px;" /></a>
         </div>
         <ul class="nav">
           
@@ -61,11 +61,11 @@
             </a>
           </li>
           <li class="nav-item menu-items">
-            <a class="nav-link" href="pages/charts/chartjs.html">
+            <a class="nav-link" href="alleventos">
               <span class="menu-icon">
                 <i class="mdi mdi-chart-bar"></i>
               </span>
-              <span class="menu-title">Charts</span>
+              <span class="menu-title">Eventos publicos</span>
             </a>
           </li>
       

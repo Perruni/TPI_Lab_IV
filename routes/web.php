@@ -37,6 +37,10 @@ Route::post('/guardar',[eventocontroller::class, 'guardar'])->name('guardar');
 Route::get('/{id}/edit', [eventocontroller::class, 'edit'])->name('edit');
 Route::put('/update/{id}',[eventocontroller::class, 'update'])->name('update');
 Route::delete('/borrar/{id}',[eventocontroller::class, 'borrar'])->name('borrar');
+
+Route::get('/alleventos', [EventoController::class, 'mostrarEventos'])->name('mostrareventos');
+Route::get('/eventos/{id}', [EventoController::class, 'EventoDetallado'])->name('eventodetallado');
+
 });
 
 Route::middleware('auth')->group(function () {
