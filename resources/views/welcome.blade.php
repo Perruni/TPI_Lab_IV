@@ -19,11 +19,9 @@
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-3xl font-bold text-white">EVENTOS YA!</h1>
             <nav class="space-x-6 text-white">
-                <a href="#" class="hover:text-gray-400">Inicio</a>
-                <a href="#" class="hover:text-gray-400">Eventos</a>
-                <a href="#" class="hover:text-gray-400">Crear eventos</a>
-                <a href="#" class="hover:text-gray-400">Contacto</a>
-                <a href="#" class="hover:text-gray-400">Sobre nosotros</a>
+                <a href="{{ route('mostrareventos') }}" class="hover:text-gray-400">Eventos</a>
+                <a href="{{ route('cargar') }}" class="hover:text-gray-400">Crear eventos</a>
+
             </nav>
             <div class="space-x-4">
                 <a href="{{ route('login') }}" class="px-4 py-2 bg-yellow-500 text-black rounded-md hover:bg-yellow-600">Inicia sesion</a>

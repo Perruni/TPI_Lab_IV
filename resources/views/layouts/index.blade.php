@@ -27,8 +27,8 @@
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-          <a class="sidebar-brand brand-logo" href="index.html"><img src="assets/images/logoeventosya.png" alt="logo" style="width: 200px; height: auto;"/></a>
-          <a class="sidebar-brand brand-logo-mini" href="index.html"><img src="assets/images/logoeventosyamini.png" alt="logo"style="width: 50px; height: 30px;" /></a>
+          <a class="sidebar-brand brand-logo" href="{{ route('welcome') }}"><img src="assets/images/logoeventosya.png" alt="logo" style="width: 200px; height: auto;"/></a>
+          <a class="sidebar-brand brand-logo-mini" href="{{ route('welcome') }}"><img src="assets/images/logoeventosyamini.png" alt="logo"style="width: 50px; height: 30px;" /></a>
         </div>
         <ul class="nav">
           
@@ -226,8 +226,7 @@
               <li class="nav-item dropdown">
                 <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                   <div class="navbar-profile">
-                    <img class="img-xs rounded-circle" src="assets/images/faces/face15.jpg" alt="">
-                    <p class="mb-0 d-none d-sm-block navbar-profile-name">Henry Klein</p>
+                    <p class="mb-0 d-none d-sm-block navbar-profile-name">{{ Auth::check() ? Auth::user()->name : 'Invitado' }}</p>
                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                   </div>
                 </a>
