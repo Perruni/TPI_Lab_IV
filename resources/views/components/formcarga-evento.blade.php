@@ -1,4 +1,7 @@
+   <!-- <script src="{{ asset('js/map.js') }}" defer></script>>-->
+   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTR_aVqWbhoA0BilVRg_paQy3iUxk8Ouo&callback=initMap&libraries=places"></script>
 <form action="{{ route('guardar') }}" method="POST">
+
     @csrf
     <div class="form-group">
         <label for="nombreEvento">Nombre del Evento</label>
@@ -40,5 +43,45 @@
         <input type="checkbox" id="allDay" name="allDay" class="form-check-input">
     </div>
 
+      <div id="map" style="height: 400px; width: 100%;"></div>
+
+        <input type="hidden" id="lat" name="latitude">
+        <input type="hidden" id="lng" name="longitude">
+
     <button type="submit" class="btn btn-primary">Guardar Evento</button>
 </form>
+
+
+<script>
+let map;
+ let marker;
+
+    function initMap() {
+            
+        map = new google.maps.Map(document.getElementById('map'), {
+         center: { lat: -34.397, lng: 150.644 }, 
+            zoom: 8
+        });
+
+            
+            map.addListener("click", (e) => {
+                placeMarker(e.latLng);
+            });
+        }
+
+        function placeMarker(location) {
+           
+            if (marker) {
+                marker.setPosition(location);
+            } else {
+                marker = new google.maps.Marker({
+                    position: location,
+                    map: map
+                });
+            }
+
+            
+            document.getElementById("lat").value = location.lat();
+            document.getElementById("lng").value = location.lng();
+        }
+ </script>

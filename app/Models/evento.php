@@ -11,7 +11,7 @@ class Evento extends Model
     use HasFactory;
 
     protected $table = 'eventos';
-    protected $fillable = ['user_id','nombreEvento','descripcion','fechaInicio','fechaFin','color','allDay'];
+    protected $fillable = ['user_id','nombreEvento','descripcion','fechaInicio','fechaFin','color','allDay','latitude','longitude'];
 
     public function user()
     {

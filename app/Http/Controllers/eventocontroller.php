@@ -44,7 +44,10 @@ class eventocontroller extends Controller
             'fechaFin' => 'required|date|after_or_equal:fechaInicio',
             'horaFin' => 'required|date_format:H:i',
             'color' => 'required|string|size:7',
-            'allDay' => 'nullable|boolean', 
+            'allDay' => 'nullable|boolean',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+        
         ]);
 
         
@@ -60,6 +63,9 @@ class eventocontroller extends Controller
             'fechaFin' => $fechaFinCompleta,
             'color' => $request->color,
             'allDay' => $request->allDay ? true : false,
+            'latitude' => $request->latitude, 
+            'longitude' => $request->longitude,
+          
         ]);
 
         return redirect()->route('miseventos')->with('message', 'Evento guardado con éxito.');
@@ -86,6 +92,7 @@ class eventocontroller extends Controller
             'horaFin' => 'required|date_format:H:i',
             'color' => 'required|string|size:7',
             'allDay' => 'nullable|boolean', 
+         
         ]);
 
         $fechaInicioCompleta = Carbon::parse($validated['fechaInicio'] . ' ' . $validated['horaInicio']);
@@ -98,6 +105,7 @@ class eventocontroller extends Controller
             'fechaFin' => $fechaFinCompleta,
             'color' => $validated['color'],
             'allDay' => $validated['allDay'] ? true : false,
+            
         ]);
 
         return redirect()->route('miseventos')->with('success', 'Evento actualizado correctamente.');
