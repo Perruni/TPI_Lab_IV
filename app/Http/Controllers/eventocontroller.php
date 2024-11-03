@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Helpers\ApiHelper;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\evento;
@@ -12,6 +12,7 @@ class eventocontroller extends Controller
 {
     
 
+    
     public function index()
     {
         $userId = Auth::id();
@@ -28,6 +29,14 @@ class eventocontroller extends Controller
         return view('cargar');
 
     }
+ 
+    /*Esto es para mostrar el mapa*/
+    public function showMap()
+    {
+        $apiKey = config('services.google_maps.api_key');
+         return view('formcarga-evento',compact('apiKey'));
+    }
+
 
     public function guardar(Request $request)
     {
