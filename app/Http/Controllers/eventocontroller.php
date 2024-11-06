@@ -30,13 +30,14 @@ class eventocontroller extends Controller
 
     }
  
+    
+
     /*Esto es para mostrar el mapa*/
     public function showMap()
     {
         $apiKey = config('services.google_maps.api_key');
          return view('formcarga-evento',compact('apiKey'));
     }
-
 
     public function guardar(Request $request)
     {

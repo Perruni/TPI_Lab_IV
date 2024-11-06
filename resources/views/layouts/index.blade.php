@@ -91,7 +91,13 @@
             <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
               <span class="mdi mdi-menu"></span>
             </button>
-            
+
+              <!-- Barra de busqueda -->
+              <form name ="buscarpor" class="d-flex mx-auto align-items-center" role="search" style="max-width: 500px; width: 100%;">
+                <input class="form-control me-2" type="search" placeholder="Realizar una busqueda" aria-label="Search" style="flex-grow: 1;">
+                <button class="btn btn-outline-success" type="submit" style="width: auto; padding-left: 15px; padding-right: 15px;">Buscar</button>
+              </form>
+
             <ul class="navbar-nav navbar-nav-right">
               <li class="nav-item dropdown d-none d-lg-block">
                 <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" href="{{ route('cargar') }}">+ Crear nuevo evento</a>       
@@ -204,18 +210,19 @@
                     </div>
                   </a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <div class="preview-icon bg-dark rounded-circle">
-                        <i class="mdi mdi-logout text-danger"></i>
-                      </div>
-                    </div>
-                    <div class="preview-item-content">
-                      <p class="preview-subject mb-1">Log out</p>
-                    </div>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <p class="p-3 mb-0 text-center">Advanced settings</p>
+                       <form method="POST" action="{{ route('logout') }}" class="dropdown-item preview-item" style="padding: 0; margin: 0;">
+                        @csrf
+                        <button type="submit" style="background: none; border: none; display: flex; align-items: center; width: 100%;">
+                            <div class="preview-thumbnail">
+                                <div class="preview-icon bg-dark rounded-circle">
+                                    <i class="mdi mdi-logout text-danger"></i>
+                                </div>
+                            </div>
+                            <div class="preview-item-content" style="text-align: center; flex-grow: 1;">
+                                <p class="preview-subject mb-1" style="color: white;">Log out</p>
+                            </div>
+                        </button>
+                       </form>     
                 </div>
               </li>
             </ul>
