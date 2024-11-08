@@ -3,7 +3,9 @@
 
 @section('content')
 
-  
+  <button onclick="window.location.href = '/fullcalendar'" class="btn btn-primary">
+    &larr; Volver
+</button>
 <table class="table">
     <thead>
         <tr>

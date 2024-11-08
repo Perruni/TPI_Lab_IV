@@ -27,8 +27,8 @@
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-          <a class="sidebar-brand brand-logo" href="{{ route('welcome') }}"><img src="assets/images/logoeventosya.png" alt="logo" style="width: 200px; height: auto;"/></a>
-          <a class="sidebar-brand brand-logo-mini" href="{{ route('welcome') }}"><img src="assets/images/logoeventosyamini.png" alt="logo"style="width: 50px; height: 30px;" /></a>
+          <a class="sidebar-brand brand-logo" href="{{ route('fullcalendar') }}"><img src="assets/images/logoeventosya.png" alt="logo" style="width: 200px; height: auto;"/></a>
+          <a class="sidebar-brand brand-logo-mini" href="{{ route('fullcalendar') }}"><img src="assets/images/logoeventosyamini.png" alt="logo"style="width: 50px; height: 30px;" /></a>
         </div>
         <ul class="nav">
           
@@ -69,15 +69,6 @@
             </a>
           </li>
       
-         
-          <li class="nav-item menu-items">
-            <a class="nav-link" href="http://www.bootstrapdash.com/demo/corona-free/jquery/documentation/documentation.html">
-              <span class="menu-icon">
-                <i class="mdi mdi-file-document-box"></i>
-              </span>
-              <span class="menu-title">Documentation</span>
-            </a>
-          </li>
         </ul>
       </nav>
       <!-- partial -->

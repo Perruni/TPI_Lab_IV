@@ -12,7 +12,19 @@
                 <p><strong>Descripción:</strong> {{ $evento->descripcion }}</p>
                 <p><strong>Fecha Inicio:</strong> {{ $evento->fechaInicio }} {{ $evento->horaInicio }}</p>
                 <p><strong>Fecha Fin:</strong> {{ $evento->fechaFin }} {{ $evento->horaFin }}</p>
-                
+                 
+                <h4 class="mt-4">Ubicación del Evento</h4>
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe 
+                            src="https://www.google.com/maps/embed/v1/place?key={{ config('services.google_maps.api_key') }}&q={{ $evento->latitude }},{{ $evento->longitude }}&zoom=15" 
+                            width="60px" 
+                            height="60px" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy">
+                        </iframe>
+                    </div>
+
                 <a href="{{ route('mostrareventos') }}" class="btn btn-secondary mt-3">Volver a Eventos</a>
             </div>
         </div>

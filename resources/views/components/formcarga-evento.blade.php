@@ -1,18 +1,3 @@
-
-
-<script>
-let autocomplete;
-    function initAutocomplete() {
-        autocomplete = new google.maps.places.Autocomplete(
-            document.getElementById('autocomplete'),
-            {types: ['establishment'], 
-            componentRestrictions: {country: 'AR'},
-            fields: ['place_id','geometry','name'] }
-
-        );
-    }
-</script>
-
 <script>
 let map;
 let marker;
@@ -44,7 +29,7 @@ function placeMarker(location) {
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.api_key') }}&callback=initMap&libraries=places"></script>
 
-<button onclick="window.location.href = '/tu-ruta-deseada'" class="btn btn-primary">
+<button onclick="window.location.href = '/fullcalendar'" class="btn btn-primary">
     &larr; Volver
 </button>
 

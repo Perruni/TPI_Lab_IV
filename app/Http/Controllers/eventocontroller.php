@@ -30,15 +30,7 @@ class eventocontroller extends Controller
 
     }
  
-    
-
-    /*Esto es para mostrar el mapa*/
-    public function showMap()
-    {
-        $apiKey = config('services.google_maps.api_key');
-         return view('formcarga-evento',compact('apiKey'));
-    }
-
+    //aca empieza 
     public function guardar(Request $request)
     {
 
@@ -54,7 +46,7 @@ class eventocontroller extends Controller
             'fechaFin' => 'required|date|after_or_equal:fechaInicio',
             'horaFin' => 'required|date_format:H:i',
             'color' => 'required|string|size:7',
-            'allDay' => 'nullable|boolean',
+            'allDay' => 'nullable|boolean', 
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
         
@@ -75,11 +67,20 @@ class eventocontroller extends Controller
             'allDay' => $request->allDay ? true : false,
             'latitude' => $request->latitude, 
             'longitude' => $request->longitude,
-          
         ]);
 
-        return redirect()->route('miseventos')->with('message', 'Evento guardado con éxito.');
+        return redirect()->route('miseventos')->with('message', 'Evento guardado con éxito.');
     }
+    //aca termina
+
+    /*Esto es para mostrar el mapa*/
+    public function showMap()
+    {
+        $apiKey = config('services.google_maps.api_key');
+         return view('formcarga-evento',compact('apiKey'));
+    }
+
+    
 
     public function edit($id)
     {
