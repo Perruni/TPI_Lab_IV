@@ -33,84 +33,59 @@ function placeMarker(location) {
     &larr; Volver
 </button>
 
-<form action="{{ route('guardar') }}" method="POST" class="p-3 shadow-sm bg-white rounded" style="max-width: 500px; margin: auto;">
+<form action="{{ route('guardar') }}" method="POST" class="form-container">
     @csrf
-    <h4 class="mb-3 text-primary">Crear Nuevo Evento</h4>
+    <h4 class="form-title">Crear Nuevo Evento</h4>
 
-    <div class="form-group mb-2">
-        <label for="nombreEvento" class="form-label fw-bold">Nombre del Evento</label>
-        <input type="text" id="nombreEvento" name="nombreEvento" class="form-control input-gray text-black" placeholder="Ingrese el nombre del evento" required>
+    <div class="form-group">
+        <label for="nombreEvento" class="form-label">Nombre del Evento</label>
+        <input type="text" id="nombreEvento" name="nombreEvento" class="form-input" placeholder="Ingrese el nombre del evento" required>
     </div>
 
-    <div class="form-group mb-2">
-        <label for="descripcion" class="form-label fw-bold">Descripción</label>
-        <textarea id="descripcion" name="descripcion" class="form-control input-gray text-black" rows="2" placeholder="Descripción del evento" required></textarea>
+    <div class="form-group">
+        <label for="descripcion" class="form-label">Descripción</label>
+        <textarea id="descripcion" name="descripcion" class="form-input" rows="2" placeholder="Descripción del evento" required></textarea>
     </div>
 
-    <div class="row">
-        <div class="col-md-6 mb-2">
-            <label for="fechaInicio" class="form-label fw-bold">Fecha de Inicio</label>
-            <input type="date" id="fechaInicio" name="fechaInicio" class="form-control input-gray text-black" required>
+    <div class="form-row">
+        <div class="form-group">
+            <label for="fechaInicio" class="form-label">Fecha de Inicio</label>
+            <input type="date" id="fechaInicio" name="fechaInicio" class="form-input" required>
         </div>
-        <div class="col-md-6 mb-2">
-            <label for="horaInicio" class="form-label fw-bold">Hora de Inicio</label>
-            <input type="time" id="horaInicio" name="horaInicio" class="form-control input-gray text-black" required>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6 mb-2">
-            <label for="fechaFin" class="form-label fw-bold">Fecha de Fin</label>
-            <input type="date" id="fechaFin" name="fechaFin" class="form-control input-gray text-black" required>
-        </div>
-        <div class="col-md-6 mb-2">
-            <label for="horaFin" class="form-label fw-bold">Hora de Fin</label>
-            <input type="time" id="horaFin" name="horaFin" class="form-control input-gray text-black" required>
+        <div class="form-group">
+            <label for="horaInicio" class="form-label">Hora de Inicio</label>
+            <input type="time" id="horaInicio" name="horaInicio" class="form-input" required>
         </div>
     </div>
 
-    <div class="form-group mb-2">
-        <label for="color" class="form-label fw-bold">Color</label>
-        <input type="color" id="color" name="color" class="form-control form-control-color input-gray text-black">
+    <div class="form-row">
+        <div class="form-group">
+            <label for="fechaFin" class="form-label">Fecha de Fin</label>
+            <input type="date" id="fechaFin" name="fechaFin" class="form-input" required>
+        </div>
+        <div class="form-group">
+            <label for="horaFin" class="form-label">Hora de Fin</label>
+            <input type="time" id="horaFin" name="horaFin" class="form-input" required>
+        </div>
     </div>
 
-    <div class="form-group form-check mb-2">
+    <div class="form-group">
+        <label for="color" class="form-label">Color</label>
+        <input type="color" id="color" name="color" class="form-input-color">
+    </div>
+
+    <div class="form-group form-check">
         <input type="checkbox" id="allDay" name="allDay" class="form-check-input">
-        <label for="allDay" class="form-check-label text-black">Todo el día</label>
+        <label for="allDay" class="form-check-label">Todo el día</label>
     </div>
 
-    <div class="mb-3">
-        <label class="form-label fw-bold">Ubicación del evento</label>
-        <div id="map" style="height: 300px; width: 100%; border-radius: 5px;"></div>
+    <div class="form-group">
+        <label class="form-label">Ubicación del evento</label>
+        <div id="map" class="map-container"></div>
     </div>
 
     <input type="hidden" id="lat" name="latitude">
     <input type="hidden" id="lng" name="longitude">
 
-    <button type="submit" class="btn btn-primary w-100">Guardar Evento</button>
+    <button type="submit" class="form-button">Guardar Evento</button>
 </form>
-<style>
-  .form-label{
-    color: #000;
-   }
-    .input-gray {
-        background-color: #f0f0f0 !important; 
-        border: 1px solid #ced4da;
-        color: #000; 
-    }
-
- 
-    .text-black {
-        color: #000 !important;
-    }
-
-    
-    ::placeholder {
-        color: gray !important;
-        opacity: 1;
-    }
-
-    
-    input[type="date"], input[type="time"] {
-        color: gray !important;
-    }</style>

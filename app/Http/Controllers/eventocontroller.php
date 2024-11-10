@@ -155,4 +155,31 @@ public function EventoDetallado($id)
     return view('EventoDetallado', compact('evento'));
 }
 
+
+
+public function buscarEventos(Request $request)
+    {
+        $search = $request->input('search');
+        $categoriaId = $request->input('categoriaId');
+
+        
+        $eventos = Evento::where(function($query) use ($search, $categoriaId) {
+                if ($search) {
+                    $query->where('name', 'like', '%' . $search . '%');
+                }
+                if ($categoriaId) {
+                    $query->where('categoria_id', $categoriaId);
+                }
+            })
+            ->whereNotIn('id', function($subquery) {
+                $subquery->select('event_id')
+                         ->from('permisos')
+                         ->where('user_id', auth()->user()->id);
+            })
+            ->where('user_id', '<>', auth()->user()->id)
+            ->get();
+
+        return view('buscarEventos', compact('eventos'));
+    }
+
 }

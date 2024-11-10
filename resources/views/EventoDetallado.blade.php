@@ -4,7 +4,7 @@
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
 @section('content')
-<div class="container-fluid py-5" style="background-color: #f5f5f5; min-height: 100vh;">
+<div class="container-fluid py-5" min-height: 100vh;">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow p-4">
