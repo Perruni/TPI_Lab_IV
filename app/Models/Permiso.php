@@ -11,7 +11,16 @@ class Permiso extends Model
 
     protected $table = 'permisos';
 
-    protected $fillable = ['user_id','event_id','asistencia','verEvento','invitar','eliminarIvitado','modificar','eliminarEvento',];
+    protected $fillable = [
+        'user_id',
+        'event_id',
+        'asistencia',
+        'verEvento',
+        'invitar',
+        'eliminarIvitado',
+        'modificar',
+        'eliminarEvento',
+    ];
 
     public function user()
     {

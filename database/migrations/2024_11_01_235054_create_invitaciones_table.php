@@ -11,19 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('permisos', function (Blueprint $table) {
+        Schema::create('invitaciones', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id'); 
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('event_id'); 
             $table->foreign('event_id')->references('id')->on('eventos');
             $table->enum('asistencia', ['pendiente', 'aceptada', 'rechazada'])->default('pendiente');
-            $table->boolean('verEvento');
-            $table->boolean('invitar')->default(false);
-            $table->boolean('eliminarIvitado')->default(false);
-            $table->boolean('modificar')->default(false);
-            $table->boolean('eliminarEvento')->default(false);        
             $table->timestamps();
+            $table->date('fecha');
         });
     }
 
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('permisos');
+        Schema::dropIfExists('invitacions');
     }
 };

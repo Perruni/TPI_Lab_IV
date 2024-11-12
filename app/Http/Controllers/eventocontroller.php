@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\evento;
+use App\Models\Permiso;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
 
 class eventocontroller extends Controller
 {
@@ -76,7 +78,7 @@ class eventocontroller extends Controller
     public function update(Request $request, $id)
     {
         $evento = Evento::findOrFail($id);
-
+                
         $validated = $request->validate([
             'nombreEvento' => 'required|string|max:255',
             'descripcion' => 'required|string',
@@ -85,21 +87,22 @@ class eventocontroller extends Controller
             'fechaFin' => 'required|date|after_or_equal:fechaInicio',
             'horaFin' => 'required|date_format:H:i',
             'color' => 'required|string|size:7',
-            'allDay' => 'nullable|boolean', 
-        ]);
+             
+        ]);                
+        
 
         $fechaInicioCompleta = Carbon::parse($validated['fechaInicio'] . ' ' . $validated['horaInicio']);
         $fechaFinCompleta = Carbon::parse($validated['fechaFin'] . ' ' . $validated['horaFin']);
-
+        
         $evento->update([
             'nombreEvento' => $validated['nombreEvento'],
             'descripcion' => $validated['descripcion'],
             'fechaInicio' => $fechaInicioCompleta,
             'fechaFin' => $fechaFinCompleta,
             'color' => $validated['color'],
-            'allDay' => $validated['allDay'] ? true : false,
+            'allDay' => $request['allDay'] ? true : false,
         ]);
-
+        
         return redirect()->route('miseventos')->with('success', 'Evento actualizado correctamente.');
     }
     
@@ -125,15 +128,23 @@ class eventocontroller extends Controller
     }
     
     public function mostrarEventos()
-{
-    $eventos = Evento::all(); //Aca iria la logica para ver solo los publicos
-    return view('mostrarEventos', compact('eventos'));
-}
+    {
+        $eventos = Evento::all(); //Aca iria la logica para ver solo los publicos
+        return view('mostrarEventos', compact('eventos'));
+    }
 
-public function EventoDetallado($id)
-{
-    $evento = Evento::findOrFail($id); 
-    return view('EventoDetallado', compact('evento'));
-}
+    public function EventoDetallado($id)
+    {
+        $evento = Evento::findOrFail($id); 
+        $permisos = Permiso::where('event_id', $id)
+                            ->with('user')
+                            ->get();
 
+        return view('eventoDetallado', [
+            'evento' => $evento,
+            'permisos' => $permisos,
+        ]);
+    }
+
+    
 }

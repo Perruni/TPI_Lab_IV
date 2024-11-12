@@ -40,7 +40,6 @@
 </div>
 
 <style>
-    /* Estilos personalizados para el formulario */
     .custom-form {
         max-width: 800px;
         margin: 0 auto;

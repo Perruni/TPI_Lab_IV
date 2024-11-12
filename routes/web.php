@@ -34,19 +34,25 @@ Route::middleware('auth')->group(function () {
 Route::get('/miseventos', [eventocontroller::class, 'index'])->name('miseventos');
 Route::get('/nuevoevento',[eventocontroller::class, 'cargar'])->name('cargar');
 Route::post('/guardar',[eventocontroller::class, 'guardar'])->name('guardar');
-Route::get('/{id}/edit', [eventocontroller::class, 'edit'])->name('edit');
+Route::get('/edit/{id}', [eventocontroller::class, 'edit'])->name('edit');
 Route::put('/update/{id}',[eventocontroller::class, 'update'])->name('update');
 Route::delete('/borrar/{id}',[eventocontroller::class, 'borrar'])->name('borrar');
-
-Route::get('/alleventos', [EventoController::class, 'mostrarEventos'])->name('mostrareventos');
-Route::get('/eventos/{id}', [EventoController::class, 'EventoDetallado'])->name('eventodetallado');
-
+Route::get('/alleventos', [eventoController::class, 'mostrarEventos'])->name('mostrareventos');
+Route::get('/eventos/{id}', [eventoController::class, 'EventoDetallado'])->name('eventodetallado');
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/fullcalendar', [Eventocontroller::class, 'fullCalendar'])->name('fullcalendar');
+    Route::get('/fullcalendar', [eventocontroller::class, 'fullCalendar'])->name('fullcalendar');
 });
 
+
+use App\Http\Controllers\invitacioncontroller;
+
+Route::middleware('auth')->group(function () {
+    Route::get('/invitar/{eventoId}', [invitacioncontroller::class, 'invitar'])->name('invitar');
+    Route::get('/buscarinvitados', [invitacioncontroller::class, 'buscarinvitados'])->name('buscarinvitados');
+    Route::post('/enviarinvitacion', [invitacioncontroller::class, 'enviarinvitacion'])->name('enviarinvitacion');
+});
 
 
 

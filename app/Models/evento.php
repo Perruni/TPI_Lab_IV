@@ -11,11 +11,28 @@ class Evento extends Model
     use HasFactory;
 
     protected $table = 'eventos';
-    protected $fillable = ['user_id','nombreEvento','descripcion','fechaInicio','fechaFin','color','allDay'];
+    protected $fillable = [
+        'user_id',
+        'nombreEvento',
+        'descripcion',
+        'fechaInicio',
+        'fechaFin',
+        'color',
+        'allDay'
+    ];
+
+    
+
+    public function permisos()
+    {
+        return $this->hasMany(Permiso::class);
+    }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
-    }
+        return $this->belongsToMany(User::class, 'permisos')
+                    ->withPivot(['asistencia', 'verEvento', 'invitar', 'eliminarIvitado', 'modificar', 'eliminarEvento'])
+                    ->withTimestamps();
 
+    }
 }
