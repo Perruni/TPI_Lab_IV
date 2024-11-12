@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Helpers\ApiHelper;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\evento;
@@ -14,6 +14,7 @@ class eventocontroller extends Controller
 {
     
 
+    
     public function index()
     {
         $userId = Auth::id();
@@ -30,7 +31,8 @@ class eventocontroller extends Controller
         return view('cargar');
 
     }
-
+ 
+    //aca empieza 
     public function guardar(Request $request)
     {
 
@@ -47,6 +49,9 @@ class eventocontroller extends Controller
             'horaFin' => 'required|date_format:H:i',
             'color' => 'required|string|size:7',
             'allDay' => 'nullable|boolean', 
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+        
         ]);
 
         
@@ -62,10 +67,22 @@ class eventocontroller extends Controller
             'fechaFin' => $fechaFinCompleta,
             'color' => $request->color,
             'allDay' => $request->allDay ? true : false,
+            'latitude' => $request->latitude, 
+            'longitude' => $request->longitude,
         ]);
 
-        return redirect()->route('miseventos')->with('message', 'Evento guardado con éxito.');
+        return redirect()->route('miseventos')->with('message', 'Evento guardado con éxito.');
     }
+    //aca termina
+
+    /*Esto es para mostrar el mapa*/
+    public function showMap()
+    {
+        $apiKey = config('services.google_maps.api_key');
+         return view('formcarga-evento',compact('apiKey'));
+    }
+
+    
 
     public function edit($id)
     {
@@ -86,8 +103,7 @@ class eventocontroller extends Controller
             'horaInicio' => 'required|date_format:H:i',
             'fechaFin' => 'required|date|after_or_equal:fechaInicio',
             'horaFin' => 'required|date_format:H:i',
-            'color' => 'required|string|size:7',
-             
+            'color' => 'required|string|size:7',            
         ]);                
         
 
@@ -101,6 +117,7 @@ class eventocontroller extends Controller
             'fechaFin' => $fechaFinCompleta,
             'color' => $validated['color'],
             'allDay' => $request['allDay'] ? true : false,
+
         ]);
         
         return redirect()->route('miseventos')->with('success', 'Evento actualizado correctamente.');
@@ -146,5 +163,31 @@ class eventocontroller extends Controller
         ]);
     }
 
-    
+
+public function buscarEventos(Request $request)
+    {
+        $search = $request->input('search');
+        $categoriaId = $request->input('categoriaId');
+
+        
+        $eventos = Evento::where(function($query) use ($search, $categoriaId) {
+                if ($search) {
+                    $query->where('name', 'like', '%' . $search . '%');
+                }
+                if ($categoriaId) {
+                    $query->where('categoria_id', $categoriaId);
+                }
+            })
+            ->whereNotIn('id', function($subquery) {
+                $subquery->select('event_id')
+                         ->from('permisos')
+                         ->where('user_id', auth()->user()->id);
+            })
+            ->where('user_id', '<>', auth()->user()->id)
+            ->get();
+
+        return view('buscarEventos', compact('eventos'));
+    }
+
+
 }
