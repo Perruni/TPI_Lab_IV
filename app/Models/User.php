@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
@@ -47,5 +47,20 @@ class User extends Authenticatable
         ];
     }
 
+    public function permisos()
+    {
+        return $this->hasMany(Permiso::class);
+    }
+
+    public function eventos()
+    {
+        return $this->belongsToMany(Evento::class, 'permisos')
+                    ->withPivot(['asistencia', 'verEvento', 'invitar', 'eliminarIvitado', 'modificar', 'eliminarEvento'])
+                    ->withTimestamps();
+    }
     
+    public function userRole(): HasOne
+    {
+        return $this->hasOne(user_roles::class);
+    }
 }
