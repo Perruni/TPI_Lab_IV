@@ -177,6 +177,23 @@
         background-color: #191c24 !important;
       }
 
-
+      .arrow-button {
+        height: 26px;
+        width: 100px;
+        background-color: orange; 
+        border: none;
+        color: white; 
+        font-size: 24px;
+        padding: 10px 20px; 
+        border-radius: 5px; 
+        cursor: pointer; 
+        display: inline-flex; 
+        align-items: center; 
+        justify-content: center; 
+    }
+    
+    .arrow-button:hover {
+        background-color: darkorange; 
+    }
 
       

@@ -4,8 +4,8 @@
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
 @section('content')
-<button onclick="window.location.href = '/fullcalendar'" class="btn btn-primary">
-    &larr; Volver
+<button onclick="window.location.href = '/fullcalendar'" class="arrow-button">
+    &larr;
 </button>
 <div class="container">
     <h1 class="my-4">Eventos Disponibles</h1>
