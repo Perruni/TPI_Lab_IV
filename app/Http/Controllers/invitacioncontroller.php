@@ -11,6 +11,7 @@ use Illuminate\Support\Arr;
 use App\Http\Controllers\Controller;
 use App\Models\Invitacion;
 use Illuminate\Http\Request;
+use App\Models\Notificacion;
 
 class invitacioncontroller extends Controller
 {
@@ -119,6 +120,12 @@ class invitacioncontroller extends Controller
             'fecha' => now(),
         ]);
         
+
+        Notificacion::create([
+            'user_id' => $invitadoId,
+            'evento_id' => $eventoId,
+            'mensaje' => 'Has sido invitado al evento ' . $evento->nombreEvento,
+        ]);
 
         return redirect()->route('invitar', ['eventoId' => $eventoId])
                          ->with('success', 'Invitación enviada correctamente.');

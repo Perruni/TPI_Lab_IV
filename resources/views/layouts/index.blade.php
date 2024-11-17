@@ -30,8 +30,8 @@
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-          <a class="sidebar-brand brand-logo" href="{{ route('fullcalendar') }}"><img src="assets/images/logoeventosya.png" alt="logo" style="width: 200px; height: auto;"/></a>
-          <a class="sidebar-brand brand-logo-mini" href="{{ route('fullcalendar') }}"><img src="assets/images/logoeventosyamini.png" alt="logo"style="width: 50px; height: 30px;" /></a>
+          <a class="sidebar-brand brand-logo" href="{{ route('fullcalendar') }}"><img src="assets/images/logoeventosya.png" alt="logo" style="width: auto; height: auto;"/></a>
+          <a class="sidebar-brand brand-logo-mini" href="{{ route('fullcalendar') }}"><img src="assets/images/logoeventosyamini.png" alt="logo"style="width: auto; height: auto;" /></a>
         </div>
         <ul class="nav">
           
@@ -88,7 +88,7 @@
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar p-0 fixed-top d-flex flex-row">
           <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
+            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="assets/images/logoeventosya.png" alt="logo" /></a>
           </div>
           <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
             <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -96,102 +96,53 @@
             </button>
 
               <!-- Barra de busqueda -->
-              <form name ="buscarpor" class="d-flex mx-auto align-items-center" role="search" style="max-width: 500px; width: 100%;">
-                <input class="form-control me-2" type="search" placeholder="Realizar una busqueda" aria-label="Search" style="flex-grow: 1;">
-                <button class="btn btn-outline-success" type="submit" style="width: auto; padding-left: 15px; padding-right: 15px;">Buscar</button>
-              </form>
+              <form method="GET" action="{{ route('eventos.buscar') }}" class="d-flex mx-auto align-items-center" role="search" style="max-width: 500px; width: 100%;">
+    <input class="form-control me-2" type="search" placeholder="Buscar por nombre" name="search" value="{{ request('search') }}" style="flex-grow: 1;">
+    <button class="btn btn-outline-success" type="submit" style="width: auto; padding-left: 15px; padding-right: 15px;">Buscar</button>
+</form>
 
             <ul class="navbar-nav navbar-nav-right">
               <li class="nav-item dropdown d-none d-lg-block">
                 <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" href="{{ route('cargar') }}">+ Crear nuevo evento</a>       
               <li class="nav-item dropdown border-left">
-                <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-                  <i class="mdi mdi-email"></i>
-                  <span class="count bg-success"></span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
-                  <h6 class="p-3 mb-0">Messages</h6>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <img src="assets/images/faces/face4.jpg" alt="image" class="rounded-circle profile-pic">
-                    </div>
-                    <div class="preview-item-content">
-                      <p class="preview-subject ellipsis mb-1">Mark send you a message</p>
-                      <p class="text-muted mb-0"> 1 Minutes ago </p>
-                    </div>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <img src="assets/images/faces/face2.jpg" alt="image" class="rounded-circle profile-pic">
-                    </div>
-                    <div class="preview-item-content">
-                      <p class="preview-subject ellipsis mb-1">Cregh send you a message</p>
-                      <p class="text-muted mb-0"> 15 Minutes ago </p>
-                    </div>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <img src="assets/images/faces/face3.jpg" alt="image" class="rounded-circle profile-pic">
-                    </div>
-                    <div class="preview-item-content">
-                      <p class="preview-subject ellipsis mb-1">Profile picture updated</p>
-                      <p class="text-muted mb-0"> 18 Minutes ago </p>
-                    </div>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <p class="p-3 mb-0 text-center">4 new messages</p>
-                </div>
-              </li>
-              <li class="nav-item dropdown border-left">
-                <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-                  <i class="mdi mdi-bell"></i>
-                  <span class="count bg-danger"></span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-                  <h6 class="p-3 mb-0">Notifications</h6>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <div class="preview-icon bg-dark rounded-circle">
+               
+               
+                <li class="nav-item dropdown border-left">
+    <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+        <i class="mdi mdi-bell"></i>
+        <!-- Muestra la cantidad de notificaciones no leídas -->
+        <span class="count bg-danger">{{ $notificaciones->count() }}</span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+        <h6 class="p-3 mb-0">Notificaciones</h6>
+        <div class="dropdown-divider"></div>
+        
+        <!-- Itera sobre cada notificación -->
+        @foreach ($notificaciones as $notificacion)
+            <a class="dropdown-item preview-item" href="{{ route('eventodetallado', $notificacion->evento_id) }}">
+                <div class="preview-thumbnail">
+                    <div class="preview-icon bg-dark rounded-circle">
                         <i class="mdi mdi-calendar text-success"></i>
-                      </div>
                     </div>
-                    <div class="preview-item-content">
-                      <p class="preview-subject mb-1">Event today</p>
-                      <p class="text-muted ellipsis mb-0"> Just a reminder that you have an event today </p>
-                    </div>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <div class="preview-icon bg-dark rounded-circle">
-                        <i class="mdi mdi-settings text-danger"></i>
-                      </div>
-                    </div>
-                    <div class="preview-item-content">
-                      <p class="preview-subject mb-1">Settings</p>
-                      <p class="text-muted ellipsis mb-0"> Update dashboard </p>
-                    </div>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <div class="preview-icon bg-dark rounded-circle">
-                        <i class="mdi mdi-link-variant text-warning"></i>
-                      </div>
-                    </div>
-                    <div class="preview-item-content">
-                      <p class="preview-subject mb-1">Launch Admin</p>
-                      <p class="text-muted ellipsis mb-0"> New admin wow! </p>
-                    </div>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <p class="p-3 mb-0 text-center">See all notifications</p>
                 </div>
-              </li>
+                <div class="preview-item-content">
+                    <p class="preview-subject mb-1">{{ $notificacion->titulo }}</p>
+                    <p class="text-muted ellipsis mb-0">{{ $notificacion->mensaje }}</p>
+                    <!-- Botón para ir al evento -->
+                    <span class="badge badge-primary mt-2">Ir al evento</span>
+                </div>
+            </a>
+            <div class="dropdown-divider"></div>
+        @endforeach
+
+        <!-- Si no hay notificaciones -->
+        @if ($notificaciones->isEmpty())
+            <p class="p-3 mb-0 text-center">No tienes notificaciones nuevas</p>
+        @else
+            <p class="p-3 mb-0 text-center">Ver todas las notificaciones</p>
+        @endif
+    </div>
+</li>
             <li class="nav-item dropdown">
             <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                 <div class="navbar-profile">

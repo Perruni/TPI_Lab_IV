@@ -10,6 +10,7 @@ use App\Models\User_roles;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
+use App\Models\Notificacion;
 
 class eventocontroller extends Controller
 {
@@ -20,9 +21,13 @@ class eventocontroller extends Controller
     {
         $userId = Auth::id();
 
-        $eventos = Evento::where('user_id', $userId)->get();   
+        $eventos = Evento::where('user_id', $userId)->get();
+        
+        $notificaciones = Notificacion::where('user_id', $userId)
+                                  ->where('leido', false)
+                                  ->get();
 
-        return view('miseventos',['eventos'=> $eventos]);
+        return view('miseventos',['eventos'=> $eventos, 'notificaciones' => $notificaciones]);
 
     }
 
@@ -174,15 +179,16 @@ class eventocontroller extends Controller
 public function buscarEventos(Request $request)
     {
         $search = $request->input('search');
-        $categoriaId = $request->input('categoriaId');
+  
+        //$categoriaId = $request->input('categoriaId');
         
-        $eventos = Evento::where(function($query) use ($search, $categoriaId) {
+        $eventos = Evento::where(function($query) use ($search, ) {
                 if ($search) {
                     $query->where('name', 'like', '%' . $search . '%');
                 }
-                if ($categoriaId) {
-                    $query->where('categoria_id', $categoriaId);
-                }
+                //if ($categoriaId) {
+                //    $query->where('categoria_id', $categoriaId);
+                //}
             })
             ->whereNotIn('id', function($subquery) {
                 $subquery->select('event_id')
@@ -194,6 +200,22 @@ public function buscarEventos(Request $request)
 
         return view('buscarEventos', compact('eventos'));
     }
+    public function buscarEventoss(Request $request)
+{
+    $search = $request->input('search');
 
+    // Consulta de eventos que coincidan con el nombre
+    $eventos = Evento::where('nombreEvento', 'like', '%' . $search . '%')
+                     ->whereNotIn('id', function($subquery) {
+                         $subquery->select('event_id')
+                                  ->from('permisos')
+                                  ->where('user_id', auth()->user()->id);
+                     })
+                     ->where('user_id', '<>', auth()->user()->id)
+                     ->get();
 
+    return view('buscarEventos', compact('eventos'));
+}
+
+    
 }

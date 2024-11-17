@@ -47,6 +47,7 @@ Route::delete('/borrar/{id}',[eventocontroller::class, 'borrar'])->name('borrar'
 Route::get('/alleventos', [eventoController::class, 'mostrarEventos'])->name('mostrareventos');
 Route::get('/eventos/{id}', [eventoController::class, 'EventoDetallado'])->name('eventodetallado');
 
+
 });
 Route::middleware('auth')->group(function () {
     Route::get('/fullcalendar', [eventocontroller::class, 'fullCalendar'])->name('fullcalendar');
@@ -62,6 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/invitar/{eventoId}', [invitacioncontroller::class, 'invitar'])->name('invitar');
     Route::get('/buscarinvitados', [invitacioncontroller::class, 'buscarinvitados'])->name('buscarinvitados');
     Route::post('/enviarinvitacion', [invitacioncontroller::class, 'enviarinvitacion'])->name('enviarinvitacion');
+    Route::get('/buscar-eventos', [EventoController::class, 'buscarEventoss'])->name('eventos.buscar');
     Route::get('/misinvitaciones', [invitacioncontroller::class, 'misinvitaciones'])->name('misinvitaciones');
     Route::post('/aceptar/{InvitacionID}', [invitacioncontroller::class, 'aceptar'])->name('aceptar');
     Route::post('/rechazar/{InvitacionID}', [invitacioncontroller::class, 'rechazar'])->name('rechazar');
