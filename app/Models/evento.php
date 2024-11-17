@@ -21,7 +21,10 @@ class Evento extends Model
         'allDay'
     ];
 
-    
+    public function invitaciones()
+    {
+        return $this->hasMany(Invitacion::class, 'event_id');
+    }
 
     public function permisos()
     {
