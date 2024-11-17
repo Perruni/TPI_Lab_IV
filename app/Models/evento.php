@@ -23,7 +23,10 @@ class Evento extends Model
     ];
 
 
-    
+    public function invitaciones()
+    {
+        return $this->hasMany(Invitacion::class, 'event_id');
+    }
 
     public function permisos()
     {

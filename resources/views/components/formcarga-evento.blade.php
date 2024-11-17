@@ -29,8 +29,8 @@ function placeMarker(location) {
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.api_key') }}&callback=initMap&libraries=places"></script>
 
-<button onclick="window.location.href = '/fullcalendar'" class="btn btn-primary">
-    &larr; Volver
+<button onclick="window.location.href = '/fullcalendar'" class="arrow-button">
+    &larr;
 </button>
 
 <form action="{{ route('guardar') }}" method="POST" class="form-container">
