@@ -5,13 +5,7 @@
 <div class="container">
     <h2 class="mb-4">Resultados de la Búsqueda</h2>
 
-    <!-- Formulario de búsqueda -->
-    <form method="GET" action="{{ route('eventos.buscar') }}" class="d-flex mx-auto align-items-center" role="search" style="max-width: 500px; width: 100%;">
-        <input class="form-control me-2" type="search" placeholder="Buscar por nombre" name="search" value="{{ request('search') }}" style="flex-grow: 1;">
-        <button class="btn btn-outline-success" type="submit" style="width: auto; padding-left: 15px; padding-right: 15px;">Buscar</button>
-    </form>
 
-    <!-- Verificar si hay resultados -->
     @if ($eventos->isEmpty())
         <p>No se encontraron eventos que coincidan con tu búsqueda.</p>
     @else
