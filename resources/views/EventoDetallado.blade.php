@@ -1,6 +1,10 @@
 @extends('layouts.index')
 
 @section('content')
+<button onclick="window.location.href = '/fullcalendar'" class="arrow-button">
+    &larr;
+</button>
+<div class="container-fluid py-5" min-height: 100vh;">
 
 <div class="container">
     <div class="row justify-content-center">

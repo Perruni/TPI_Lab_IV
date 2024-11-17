@@ -25,18 +25,7 @@ class Invitacion extends Model
 
     public function evento()
     {
-        return $this->belongsTo(Evento::class);
+        return $this->belongsTo(Evento::class, 'event_id');
     }
-
-    public function aceptar()
-    {
-        $this->update(['estado' => 'aceptada']);
-        $this->delete();
-    }
-
-    public function rechazar()
-    {
-        $this->update(['estado' => 'rechazada']);
-        $this->delete();
-    }
+    
 }
