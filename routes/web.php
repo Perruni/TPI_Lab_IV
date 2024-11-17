@@ -52,9 +52,6 @@ Route::get('/eventos/{id}', [eventoController::class, 'EventoDetallado'])->name(
 Route::middleware('auth')->group(function () {
     Route::get('/fullcalendar', [eventocontroller::class, 'fullCalendar'])->name('fullcalendar');
 });
-Route::get('/cargar', function () {
-    return view('cargar');
-})->name('cargar');
 
 Route::get('/api/google-maps-key', function () {
     return response()->json(['apiKey' => config('services.google_maps.api_key')]);
