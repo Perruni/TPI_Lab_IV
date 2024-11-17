@@ -39,3 +39,39 @@
         </div>
     </form>
 </div>
+
+
+<style>
+    .custom-form {
+        max-width: 800px;
+        margin: 0 auto;
+        background: linear-gradient(145deg, #f0f4f7, #cfd8dc);
+        border: 1px solid #cfd8dc;
+    }
+
+    .custom-form .form-label {
+        font-weight: bold;
+        color: #555;
+    }
+
+    .custom-form .form-control {
+        border: 1px solid #ced4da;
+        transition: box-shadow 0.3s ease-in-out;
+    }
+
+    .custom-form .form-control:focus {
+        box-shadow: 0 0 8px 0 rgba(0, 123, 255, 0.25);
+        border-color: #80bdff;
+    }
+
+    .custom-form .btn-primary {
+        background-color: #007bff;
+        border: none;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .custom-form .btn-primary:hover {
+        background-color: #0056b3;
+    }
+</style>
+

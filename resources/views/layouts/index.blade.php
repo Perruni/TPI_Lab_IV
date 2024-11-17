@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Gestor de Eventos</title>
     <!-- plugins:css -->
+
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendors/mdi/css/materialdesignicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendors/css/vendor.bundle.base.css') }}">
@@ -266,6 +267,8 @@
     <script src="{{ asset('assets/js/todolist.js') }}"></script>
     <!-- endinject -->
     <!-- Custom js for this page -->
-    <script src="{{ asset('assets/js/dashboard.js') }}"></script>
+    <script src="{{ asset('assets/js/dashboard.js') }}"></script>
+    <!-- End custom js for this page -->
+
   </body>
 </html>
