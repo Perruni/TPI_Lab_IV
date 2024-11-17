@@ -2,9 +2,10 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 })->name('welcome');
 
 Route::get('/index', function () {
@@ -12,7 +13,7 @@ Route::get('/index', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('welcome');
+    return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -23,6 +24,11 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
+Route::get('/fullcalendar', function () {
+    return view('fullcalendar');
+});
+
+
 use App\Http\Controllers\permisoscontroller;
 
 Route::get('/permisos', [permisoscontroller::class, 'index'])->name('evento.detallesevento');
@@ -31,6 +37,7 @@ use App\Http\Controllers\Eventocontroller;
 use Illuminate\Types\Relations\Role;
 
 Route::middleware('auth')->group(function () {
+
 Route::get('/miseventos', [eventocontroller::class, 'index'])->name('miseventos');
 Route::get('/nuevoevento',[eventocontroller::class, 'cargar'])->name('cargar');
 Route::post('/guardar',[eventocontroller::class, 'guardar'])->name('guardar');
@@ -39,12 +46,18 @@ Route::put('/update/{id}',[eventocontroller::class, 'update'])->name('update');
 Route::delete('/borrar/{id}',[eventocontroller::class, 'borrar'])->name('borrar');
 Route::get('/alleventos', [eventoController::class, 'mostrarEventos'])->name('mostrareventos');
 Route::get('/eventos/{id}', [eventoController::class, 'EventoDetallado'])->name('eventodetallado');
-});
 
+});
 Route::middleware('auth')->group(function () {
     Route::get('/fullcalendar', [eventocontroller::class, 'fullCalendar'])->name('fullcalendar');
 });
+Route::get('/cargar', function () {
+    return view('cargar');
+})->name('cargar');
 
+Route::get('/api/google-maps-key', function () {
+    return response()->json(['apiKey' => config('services.google_maps.api_key')]);
+});
 
 use App\Http\Controllers\invitacioncontroller;
 
@@ -58,7 +71,9 @@ Route::middleware('auth')->group(function () {
 });
 
 
-
-
-
-
+Route::post('/logout', function () {
+    Auth::logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    return redirect('/');
+})->name('logout');

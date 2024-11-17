@@ -11,6 +11,7 @@ class Evento extends Model
     use HasFactory;
 
     protected $table = 'eventos';
+
     protected $fillable = [
         'user_id',
         'nombreEvento',
@@ -20,6 +21,7 @@ class Evento extends Model
         'color',
         'allDay'
     ];
+
 
     public function invitaciones()
     {

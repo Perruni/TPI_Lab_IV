@@ -1,3 +1,4 @@
+
 <div class="container mt-4">
     <form action="{{ $action }}" method="{{ strtoupper($method) }}" class="custom-form p-5 rounded shadow-lg">
         @csrf
@@ -39,6 +40,7 @@
     </form>
 </div>
 
+
 <style>
     .custom-form {
         max-width: 800px;
@@ -72,3 +74,4 @@
         background-color: #0056b3;
     }
 </style>
+
