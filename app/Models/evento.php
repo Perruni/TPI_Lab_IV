@@ -19,7 +19,9 @@ class Evento extends Model
         'fechaInicio',
         'fechaFin',
         'color',
-        'allDay'
+        'allDay',
+        'latitude', 
+        'longitude',
     ];
 
 

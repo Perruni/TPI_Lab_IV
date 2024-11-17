@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\evento;
 use App\Models\Permiso;
+use App\Models\User_roles;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
@@ -28,7 +29,17 @@ class eventocontroller extends Controller
 
     public function cargar(){      
 
-        return view('cargar');
+        $userId = Auth::id();
+
+        $userRol = User_roles::where('user_id', $userId)->get();
+
+        if ($userRol == 'organizador') {
+            return view('cargar');
+        }
+        else {
+            return redirect()->route('miseventos')->with('message', 'No tienes permisos para crear eventos');
+        }
+        
 
     }
  
@@ -164,7 +175,6 @@ public function buscarEventos(Request $request)
     {
         $search = $request->input('search');
         $categoriaId = $request->input('categoriaId');
-
         
         $eventos = Evento::where(function($query) use ($search, $categoriaId) {
                 if ($search) {
