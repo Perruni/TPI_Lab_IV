@@ -20,10 +20,16 @@ class Evento extends Model
         'fechaFin',
         'color',
         'allDay',
+        'direccion',
         'latitude', 
         'longitude',
     ];
 
+
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class);
+    }
 
     public function invitaciones()
     {
@@ -38,7 +44,7 @@ class Evento extends Model
     public function user()
     {
         return $this->belongsToMany(User::class, 'permisos')
-                    ->withPivot(['asistencia', 'verEvento', 'invitar', 'eliminarIvitado', 'modificar', 'eliminarEvento'])
+                    ->withPivot(['asistencia', 'verEvento', 'invitar', 'eliminarIvitado', 'modificar', 'eliminarEvento', 'darPermisos'])
                     ->withTimestamps();
 
     }

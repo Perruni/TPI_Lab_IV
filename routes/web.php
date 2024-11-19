@@ -31,7 +31,10 @@ Route::get('/fullcalendar', function () {
 
 use App\Http\Controllers\permisoscontroller;
 
-Route::get('/permisos', [permisoscontroller::class, 'index'])->name('evento.detallesevento');
+Route::middleware('auth')->group(function () {
+    Route::get('/permisos', [permisoscontroller::class, 'index'])->name('evento.detallesevento');
+
+});
 
 use App\Http\Controllers\Eventocontroller;
 use Illuminate\Types\Relations\Role;
@@ -46,7 +49,8 @@ Route::put('/update/{id}',[eventocontroller::class, 'update'])->name('update');
 Route::delete('/borrar/{id}',[eventocontroller::class, 'borrar'])->name('borrar');
 Route::get('/alleventos', [eventoController::class, 'mostrarEventos'])->name('mostrareventos');
 Route::get('/eventos/{id}', [eventoController::class, 'EventoDetallado'])->name('eventodetallado');
-
+Route::get('/buscar-eventos', [eventoController::class, 'buscarEventos'])->name('eventos.buscar');
+Route::post('/eliminar-invitado/{invitacionId}', [eventoController::class, 'eliminarInvitado'])->name('eliminar-invitado');
 
 });
 Route::middleware('auth')->group(function () {
@@ -63,11 +67,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/invitar/{eventoId}', [invitacioncontroller::class, 'invitar'])->name('invitar');
     Route::get('/buscarinvitados', [invitacioncontroller::class, 'buscarinvitados'])->name('buscarinvitados');
     Route::post('/enviarinvitacion', [invitacioncontroller::class, 'enviarinvitacion'])->name('enviarinvitacion');
-    Route::get('/buscar-eventos', [EventoController::class, 'buscarEventoss'])->name('eventos.buscar');
     Route::get('/misinvitaciones', [invitacioncontroller::class, 'misinvitaciones'])->name('misinvitaciones');
     Route::post('/aceptar/{InvitacionID}', [invitacioncontroller::class, 'aceptar'])->name('aceptar');
     Route::post('/rechazar/{InvitacionID}', [invitacioncontroller::class, 'rechazar'])->name('rechazar');
 });
+
 
 
 Route::post('/logout', function () {
