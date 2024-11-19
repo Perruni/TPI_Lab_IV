@@ -13,7 +13,7 @@
     </div>
 @endif
 
-<h3>Llega a la vista invitar</h3>
+<h3>Sección de Invitación</h3>	
 
 <form action="{{ route('buscarinvitados') }}" method="GET">
     <div class="mb-3">
@@ -54,8 +54,5 @@
 @elseif(isset($users))
     <p>No se encontraron resultados.</p>
 @endif
-
-
-
 
 @endsection

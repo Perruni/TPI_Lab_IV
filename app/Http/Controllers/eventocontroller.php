@@ -5,10 +5,14 @@ use App\Helpers\ApiHelper;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\evento;
+use App\Models\Categoria;
 use App\Models\Permiso;
+use App\Models\Invitacion;
+use App\Models\User_roles;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
+use App\Models\Notificacion;
 
 class eventocontroller extends Controller
 {
@@ -19,16 +23,37 @@ class eventocontroller extends Controller
     {
         $userId = Auth::id();
 
-        $eventos = Evento::where('user_id', $userId)->get();   
+        $puedeVerEventos = Permiso::where('user_id', $userId)
+                                ->where('verEvento', true)
+                                ->pluck('event_id');
 
-        return view('miseventos',['eventos'=> $eventos]);
+        $eventos = Evento::where('user_id', $userId) 
+                    ->orWhereIn('id', $puedeVerEventos)
+                    ->with('categoria')
+                    ->get();
+        
+        $notificaciones = Notificacion::where('user_id', $userId)
+                                  ->where('leido', false)
+                                  ->get();
+
+        return view('miseventos',['eventos'=> $eventos, 'notificaciones' => $notificaciones]);
 
     }
 
 
     public function cargar(){      
 
-        return view('cargar');
+        $userId = Auth::id();
+        $categorias = Categoria::all();
+
+        $userRol = User_roles::where('user_id', $userId)->get();
+        if ($userRol->first()->organizador) {
+            return view('cargar',['categorias' => $categorias]);
+        }
+        else {
+            return redirect()->route('miseventos')->with('message', 'No tienes permisos para crear eventos');
+        }
+        
 
     }
  
@@ -36,27 +61,28 @@ class eventocontroller extends Controller
     public function guardar(Request $request)
     {
 
-        /*if (!isset($request->allDay)) {
-            $request->merge(['allDay' => false]); // Es falso si no se envia nada
-        }*/
-
         $request->validate([
             'nombreEvento' => 'required|string|max:255',
             'descripcion' => 'required|string',
-            'fechaInicio' => 'required|date',
+            'fechaInicio' => 'required|date|after_or_equal:' . Carbon::tomorrow()->toDateString(),
             'horaInicio' => 'required|date_format:H:i',
             'fechaFin' => 'required|date|after_or_equal:fechaInicio',
             'horaFin' => 'required|date_format:H:i',
-            'color' => 'required|string|size:7',
-            'allDay' => 'nullable|boolean', 
+            'categoria_id' => 'required|exists:categorias,id',
+            'direccion' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
         
         ]);
-
+        
         
         $fechaInicioCompleta = Carbon::parse($request->fechaInicio . ' ' . $request->horaInicio);
         $fechaFinCompleta = Carbon::parse($request->fechaFin . ' ' . $request->horaFin);
+        
+        if ($fechaInicioCompleta->isToday() && $fechaFinCompleta->lte($fechaInicioCompleta)) {
+            return redirect()->back()->withErrors(['horaFin' => 'La hora de fin debe ser mayor que la hora de inicio si el evento es hoy.']);
+        }
+        
         $userId = Auth::id();        
 
         Evento::create([
@@ -65,13 +91,14 @@ class eventocontroller extends Controller
             'descripcion' => $request->descripcion,
             'fechaInicio' => $fechaInicioCompleta,
             'fechaFin' => $fechaFinCompleta,
-            'color' => $request->color,
-            'allDay' => $request->allDay ? true : false,
+            'categoria_id' => $request->categoria_id,
+            'publico' => $request->publico ? true : false,
+            'direccion' => $request->direccion,
             'latitude' => $request->latitude, 
             'longitude' => $request->longitude,
         ]);
 
-        return redirect()->route('miseventos')->with('message', 'Evento guardado con éxito.');
+        return redirect()->route('miseventos')->with('message', 'Evento guardado con éxito.');
     }
     //aca termina
 
@@ -138,7 +165,13 @@ class eventocontroller extends Controller
     {
         $userId = Auth::id();
 
-        $eventos = Evento::where('user_id', $userId)->get();   
+        $puedeVerEventos = Permiso::where('user_id', $userId)
+                                ->where('verEvento', true)
+                                ->pluck('event_id');
+
+        $eventos = Evento::where('user_id', $userId) 
+                    ->orWhereIn('id', $puedeVerEventos)
+                    ->get();          
 
         return view('fullCalendar',['eventos'=> $eventos]);
 
@@ -164,30 +197,78 @@ class eventocontroller extends Controller
     }
 
 
-public function buscarEventos(Request $request)
+    public function buscarEventos(Request $request)
+        {
+            $search = $request->input('search');
+            $userId = Auth::id();
+    
+            //$categoriaId = $request->input('categoriaId');
+            
+            $eventos = Evento::where(function($query) use ($search) {
+                    if ($search) {
+                        $query->where('name', 'like', '%' . $search . '%');
+                    }
+                    //if ($categoriaId) {
+                    //    $query->where('categoria_id', $categoriaId);
+                    //}
+                })
+                ->whereNotIn(function($subquery) use($userId) {
+                    $subquery->select('event_id')
+                            ->from('permisos')
+                            ->where('user_id', $userId);
+                })
+                ->where('user_id', '<>', $userId)
+                ->get();
+
+            return view('buscarEventos', compact('eventos'));
+        }
+
+    public function eliminarInvitado($invitadoId)
     {
-        $search = $request->input('search');
-        $categoriaId = $request->input('categoriaId');
 
-        
-        $eventos = Evento::where(function($query) use ($search, $categoriaId) {
-                if ($search) {
-                    $query->where('name', 'like', '%' . $search . '%');
-                }
-                if ($categoriaId) {
-                    $query->where('categoria_id', $categoriaId);
-                }
-            })
-            ->whereNotIn('id', function($subquery) {
-                $subquery->select('event_id')
-                         ->from('permisos')
-                         ->where('user_id', auth()->user()->id);
-            })
-            ->where('user_id', '<>', auth()->user()->id)
-            ->get();
+        $userId = Auth::id();
 
-        return view('buscarEventos', compact('eventos'));
+        $invitacion = Invitacion::findOrFail($invitadoId);
+
+        if ($invitacion->asistencia === 'rechazada') {
+            return redirect()->back()->with('error', 'Este invitado ya ha rechazado la invitación o ya ha sido eliminado del evento.');
+        }
+
+        $permiso = Permiso::where('user_id', $invitacion->user_id)
+                        ->where('event_id', $invitacion->event_id)
+                        ->first();
+
+        if (!$permiso || !$permiso->eliminarIvitado || $userId === $permiso->user_id) {
+            abort(403, 'No tienes permiso para modificar esta invitación.');
+        }
+
+        Invitacion::updateOrCreate(
+            [
+                'id' => $invitacion->id,
+            ],
+            [
+                'user_id' => $invitacion->user_id,
+                'event_id' => $invitacion->event_id,
+                'asistencia' => 'rechazada',
+                'fecha' => $invitacion->fecha ?? now(),
+            ]
+        );
+
+        Permiso::updateOrCreate(
+                [
+                    'user_id' => $invitacion->user_id,
+                    'event_id' => $invitacion->event_id,
+                ],
+                [
+                    'asistencia' => 'rechazada',
+                    'verEvento' => false,
+                    'invitar' => false,
+                    'eliminarIvitado' => false,
+                    'modificar' => false,
+                    'eliminarEvento' => false,
+                    'darPermisos' => false,
+                ]
+            );
+        return redirect()->back()->with('success', 'Invitado eliminado correctamente.');
     }
-
-
 }

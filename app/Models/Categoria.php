@@ -1,21 +1,23 @@
 <?php
 
-// app/Models/Event.php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Event extends Model
+class Categoria extends Model
 {
     use HasFactory;
 
+    protected $table = 'categorias';
+
     protected $fillable = [
-        'nombreEvento',
-        'descripcion',
-        'fechaInicio',
-        'fechaFin',
+        'nombre',
         'color',
-        'allDay',
     ];
+
+    public function eventos()
+    {
+        return $this->hasMany(Evento::class);
+    }
 }

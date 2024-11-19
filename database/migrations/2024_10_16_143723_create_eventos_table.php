@@ -15,12 +15,14 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id'); 
             $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('categoria_id');
+            $table->foreign('categoria_id')->references('id')->on('categorias');
             $table->string('nombreEvento');
             $table->string('descripcion');
             $table->dateTime('fechaInicio');
             $table->dateTime('fechaFin');
-            $table->string('color');
-            $table->boolean('allDay');
+            $table->boolean('publico')->default(false);
+            $table->text('direccion');
             $table->timestamps();
         });
     }
