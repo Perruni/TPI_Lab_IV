@@ -16,5 +16,7 @@ class permisoscontroller extends Controller
 
     }
     
+    
+
 }
 

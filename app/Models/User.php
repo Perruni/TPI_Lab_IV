@@ -55,7 +55,7 @@ class User extends Authenticatable
     public function eventos()
     {
         return $this->belongsToMany(Evento::class, 'permisos')
-                    ->withPivot(['asistencia', 'verEvento', 'invitar', 'eliminarIvitado', 'modificar', 'eliminarEvento'])
+                    ->withPivot(['asistencia', 'verEvento', 'invitar', 'eliminarIvitado', 'modificar', 'eliminarEvento', 'darPermisos'])
                     ->withTimestamps();
     }
     

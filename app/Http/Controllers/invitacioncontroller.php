@@ -55,17 +55,19 @@ class invitacioncontroller extends Controller
         $usuariosInvitados = User_roles::where('invitado', true)->pluck('user_id');
 
         $usuariosOrganizadores = User_roles::where('organizador', true)->pluck('user_id');
-
+        
         if ($userRol->organizador) {
             $users = User::where(function($query) use ($search) {
                 $query->where('name', 'like', '%' . $search . '%')
                       ->orWhere('email', 'like', '%' . $search . '%');
             })
+                ->where(function($query) use ($usuariosInvitados, $usuariosOrganizadores) {
+                    $query->whereIn('id', $usuariosInvitados)
+                        ->orWhereIn('id', $usuariosOrganizadores);
+            })
                 ->whereNotIn('id', $invitadosIds)
-                ->whereNotIn('id', $permisosIds)
-                ->whereIn('id', $usuariosInvitados)
-                ->whereIn('id', $usuariosOrganizadores)
-                ->where('id', '<>', $eventoOwnerId)
+                ->whereNotIn('id', $permisosIds)                
+                ->where('id', '<>', $eventoOwnerId)                
                 ->get();
         }else{
             $users = User::where(function($query) use ($search) {
@@ -117,9 +119,22 @@ class invitacioncontroller extends Controller
         Invitacion::create([
             'user_id' => $invitadoId,
             'event_id' => $eventoId,
-            'fecha' => now(),
+            'fecha' => Carbon::now(),
         ]);
         
+        Permiso::create(
+            [
+                'user_id' => $invitadoId,
+                'event_id' => $eventoId,
+                'asistencia' => 'pendiente',
+                'verEvento' => false,
+                'invitar' => false,
+                'eliminarIvitado' => false,
+                'modificar' => false,
+                'eliminarEvento' => false,
+                'darPermisos' => false,
+            ]
+        );
 
         Notificacion::create([
             'user_id' => $invitadoId,
@@ -147,38 +162,47 @@ class invitacioncontroller extends Controller
     public function aceptar($InvitacionID)
     {
         $userId = Auth::id();
+        $userRol= User_roles::where('user_id', $userId)->first();
+
         $invitacion = Invitacion::where('id', $InvitacionID)
                                 ->where('user_id', $userId)
                                 ->firstorFail();
         
-        $invitacion->update(['estado' => 'aceptada']);
-
+        $invitacion->update(['asistencia' => 'aceptada']);
         $invitado = User::findOrFail($invitacion->user_id);
 
-        if ($invitado->role === 'organizador') {
-            Permiso::Create(
+        if ($userRol->organizador) {
+            Permiso::updateOrCreate(
                 [
                     'user_id' => $invitacion->user_id,
                     'event_id' => $invitacion->event_id,
-                    'asistencia' => 'pendiente',
+                ],
+                [
+                    'asistencia' => 'aceptada',
                     'verEvento' => true,
                     'invitar' => true,
                     'eliminarIvitado' => true,
                     'modificar' => true,
                     'eliminarEvento' => false,
+                    'darPermisos' => true,
                 ]
             );
         } else {
-            Permiso::create([
-                'user_id' => $invitacion->user_id,
-                'event_id' => $invitacion->event_id,
-                'asistencia' => 'pendiente',
-                'verEvento' => true,
-                'invitar' => false,
-                'eliminarIvitado' => false,
-                'modificar' => false,
-                'eliminarEvento' => false,
-            ]);
+            Permiso::updateOrCreate(
+                [
+                    'user_id' => $invitacion->user_id,
+                    'event_id' => $invitacion->event_id,
+                ],
+                [
+                    'asistencia' => 'aceptada',
+                    'verEvento' => true,
+                    'invitar' => false,
+                    'eliminarIvitado' => false,
+                    'modificar' => false,
+                    'eliminarEvento' => false,
+                    'darPermisos' => false,
+                ]
+            );
         }
         return redirect()->route('misinvitaciones')->with('success', 'Invitación aceptada correctamente.');
     }
@@ -187,38 +211,47 @@ class invitacioncontroller extends Controller
     {
 
         $userId = Auth::id();
+        $userRol= User_roles::where('user_id', $userId)->first();
         $invitacion = Invitacion::where('id', $InvitacionID)
                                 ->where('user_id', $userId)
                                 ->firstorFail();
         
-        $invitacion->update(['estado' => 'rechazada']);
+        $invitacion->update(['asistencia' => 'rechazada']);
 
         $invitado = User::findOrFail($invitacion->user_id);
 
-        if ($invitado->role === 'organizador') {
-            Permiso::Create(
+        if ($userRol->organizador) {
+            Permiso::updateOrCreate(
                 [
                     'user_id' => $invitacion->user_id,
                     'event_id' => $invitacion->event_id,
-                    'asistencia' => 'pendiente',
+                ],
+                [
+                    'asistencia' => 'aceptada',
                     'verEvento' => false,
                     'invitar' => false,
                     'eliminarIvitado' => false,
                     'modificar' => false,
                     'eliminarEvento' => false,
+                    'darPermisos' => false,
                 ]
             );
         } else {
-            Permiso::create([
-                'user_id' => $invitacion->user_id,
-                'event_id' => $invitacion->event_id,
-                'asistencia' => 'pendiente',
-                'verEvento' => false,
-                'invitar' => false,
-                'eliminarIvitado' => false,
-                'modificar' => false,
-                'eliminarEvento' => false,
-            ]);
+            Permiso::updateOrCreate(
+                [
+                    'user_id' => $invitacion->user_id,
+                    'event_id' => $invitacion->event_id,
+                ],
+                [
+                    'asistencia' => 'rechazada',
+                    'verEvento' => false,
+                    'invitar' => false,
+                    'eliminarIvitado' => false,
+                    'modificar' => false,
+                    'eliminarEvento' => false,
+                    'darPermisos' => false,
+                ]
+            );
         }
         return redirect()->route('misinvitaciones')->with('failure', 'Invitación rechazada correctamente.');
     }

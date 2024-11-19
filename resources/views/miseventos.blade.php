@@ -3,6 +3,18 @@
 
 @section('content')
 
+
+@if(session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@elseif(session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
+
+
   <button onclick="window.location.href = '/fullcalendar'" class="arrow-button">
     &larr;
 </button>
@@ -13,7 +25,8 @@
             <th scope="col">Descripción</th>
             <th scope="col">Fecha de Inicio</th>
             <th scope="col">Fecha de Fin</th>
-            <th scope="col">Todo el Día</th>
+            <th scope="col">Publico</th>
+            <th scope="col">Categoría</th>
             <th scope="col">Acciones</th>
         </tr>
     </thead>
@@ -24,7 +37,8 @@
                 <td>{{ $evento->descripcion }}</td>
                 <td>{{ $evento->fechaInicio }}</td>
                 <td>{{ $evento->fechaFin }}</td>
-                <td>{{ $evento->allDay ? 'Sí' : 'No' }}</td>
+                <td>{{ $evento->publico ? 'Sí' : 'No' }}</td>
+                <td>{{ $evento->categoria->nombre ?? 'Sin Categoría' }}</td>
                 <td>
                     <a href="{{ route('edit', $evento->id) }}" class="btn btn-warning"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                         <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>

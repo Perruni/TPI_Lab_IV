@@ -14,7 +14,7 @@ class Invitacion extends Model
     protected $fillable = [
         'user_id',
         'event_id', 
-        'estado', 
+        'asistencia', 
         'fecha'
     ];
 

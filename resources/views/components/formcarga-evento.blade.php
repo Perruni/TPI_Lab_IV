@@ -2,36 +2,31 @@
 let map;
 let marker;
 
-function initMap() {
-    map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: -34.0, lng: -64.0},
-        zoom: 4
-    });
-
-    map.addListener("click", (e) => {
-        placeMarker(e.latLng);
-    });
-}
-
-function placeMarker(location) {
-    if (marker) {
-        marker.setPosition(location);
-    } else {
-        marker = new google.maps.Marker({
-            position: location,
-            map: map
-        });
-    }
-
-    document.getElementById("lat").value = location.lat();
-    document.getElementById("lng").value = location.lng();
-}
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.api_key') }}&callback=initMap&libraries=places"></script>
-
+<script src="{{ asset('assets/js/mapwithinput.js') }}"></script>
 <button onclick="window.location.href = '/fullcalendar'" class="arrow-button">
     &larr;
 </button>
+
+@if(session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@elseif(session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
+
+@if($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
 <form action="{{ route('guardar') }}" method="POST" class="form-container">
     @csrf
@@ -45,6 +40,16 @@ function placeMarker(location) {
     <div class="form-group">
         <label for="descripcion" class="form-label">Descripción</label>
         <textarea id="descripcion" name="descripcion" class="form-input" rows="2" placeholder="Descripción del evento" required></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="categoria" class="form-label">Categoría</label>
+        <select name="categoria_id" id="categoria" class="form-input" required>
+            <option value="" disabled selected>Seleccione una categoría</option>
+            @foreach ($categorias as $categoria)
+                <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
+            @endforeach
+        </select>
     </div>
 
     <div class="form-row">
@@ -67,25 +72,25 @@ function placeMarker(location) {
             <label for="horaFin" class="form-label">Hora de Fin</label>
             <input type="time" id="horaFin" name="horaFin" class="form-input" required>
         </div>
+    </div>    
+
+    <div class="form-group form-check">
+        <input type="checkbox" id="publico" name="publico" class="form-check-input">
+        <label for="publico" class="form-check-label">Publico</label>
     </div>
 
     <div class="form-group">
-        <label for="color" class="form-label">Color</label>
-        <input type="color" id="color" name="color" class="form-input-color">
-    </div>
-
-    <div class="form-group form-check">
-        <input type="checkbox" id="allDay" name="allDay" class="form-check-input">
-        <label for="allDay" class="form-check-label">Todo el día</label>
+        <label class="form-label">Dirección</label>
+        <input class= "form-input" type="text" id="autocomplete" name="direccion"></input>
     </div>
 
     <div class="form-group">
         <label class="form-label">Ubicación del evento</label>
-        <div id="map" class="map-container"></div>
+        <div id="mapedit" class="map-container"></div>
     </div>
 
-    <input type="hidden" id="lat" name="latitude">
-    <input type="hidden" id="lng" name="longitude">
+    <input type="hidden" id="latitud" name="latitude">
+    <input type="hidden" id="longitud" name="longitude">
 
     <button type="submit" class="form-button">Guardar Evento</button>
 </form>
