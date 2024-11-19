@@ -68,13 +68,13 @@ class eventocontroller extends Controller
             'horaInicio' => 'required|date_format:H:i',
             'fechaFin' => 'required|date|after_or_equal:fechaInicio',
             'horaFin' => 'required|date_format:H:i',
-            'categoria_id' => 'required|exists:categorias,id', 
-            'publico' => 'nullable|boolean', 
+            'categoria_id' => 'required|exists:categorias,id',
+            'direccion' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
         
         ]);
-
+        
         
         $fechaInicioCompleta = Carbon::parse($request->fechaInicio . ' ' . $request->horaInicio);
         $fechaFinCompleta = Carbon::parse($request->fechaFin . ' ' . $request->horaFin);
@@ -93,6 +93,7 @@ class eventocontroller extends Controller
             'fechaFin' => $fechaFinCompleta,
             'categoria_id' => $request->categoria_id,
             'publico' => $request->publico ? true : false,
+            'direccion' => $request->direccion,
             'latitude' => $request->latitude, 
             'longitude' => $request->longitude,
         ]);

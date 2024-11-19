@@ -21,7 +21,8 @@ return new class extends Migration
             $table->string('descripcion');
             $table->dateTime('fechaInicio');
             $table->dateTime('fechaFin');
-            $table->boolean('publico');
+            $table->boolean('publico')->default(false);
+            $table->text('direccion');
             $table->timestamps();
         });
     }
