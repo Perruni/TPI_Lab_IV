@@ -18,6 +18,19 @@
   <button onclick="window.location.href = '/fullcalendar'" class="arrow-button">
     &larr;
 </button>
+
+<form action="{{ route('miseventos') }}" method="GET">
+        <label for="categoria">Filtrar por categoría:</label>
+        <select name="categoria" id="categoria" onchange="this.form.submit()">
+            <option value="">Todas</option>
+            @foreach($categoria as $cat)
+                <option value="{{ $cat->id }}" {{ request('categoria') == $cat->id ? 'selected' : '' }}>
+                    {{ $cat->nombre }}
+                </option>
+            @endforeach
+        </select>
+    </form>
+
 <table class="table">
     <thead>
         <tr>
@@ -26,7 +39,7 @@
             <th scope="col">Fecha de Inicio</th>
             <th scope="col">Fecha de Fin</th>
             <th scope="col">Publico</th>
-            <th scope="col">Categoría</th>
+            <th scope="col">Categoría</th>                                          
             <th scope="col">Acciones</th>
         </tr>
     </thead>

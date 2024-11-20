@@ -64,7 +64,7 @@
             </a>
           </li>
           <li class="nav-item menu-items">
-            <a class="nav-link" href="alleventos">
+            <a class="nav-link" href="/mostrarEventos">
               <span class="menu-icon">
                 <i class="mdi mdi-chart-bar"></i>
               </span>
@@ -228,7 +228,7 @@
     <!-- endinject -->
     <!-- Custom js for this page -->
     <script src="{{ asset('assets/js/dashboard.js') }}"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ config('app.google_maps.api_key') }}&callback=initMap&libraries=places,marker"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ config('app.google_maps.api_key') }}&callback=initMap&libraries=places,marker"></script>
 
     <!-- End custom js for this page -->
 

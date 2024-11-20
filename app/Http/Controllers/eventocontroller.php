@@ -19,25 +19,43 @@ class eventocontroller extends Controller
     
 
     
-    public function index()
+    public function index(Request $request)
     {
         $userId = Auth::id();
 
         $puedeVerEventos = Permiso::where('user_id', $userId)
-                                ->where('verEvento', true)
-                                ->pluck('event_id');
+            ->where('verEvento', true)
+            ->pluck('event_id');
 
-        $eventos = Evento::where('user_id', $userId) 
-                    ->orWhereIn('id', $puedeVerEventos)
-                    ->with('categoria')
-                    ->get();
-        
+        $eventos = Evento::where('user_id', $userId)
+            ->orWhereIn('id', $puedeVerEventos)
+            ->filtrarPorCategoria($request->categoria) 
+            ->get();
+
         $notificaciones = Notificacion::where('user_id', $userId)
-                                  ->where('leido', false)
-                                  ->get();
+            ->where('leido', false)
+            ->get();
 
-        return view('miseventos',['eventos'=> $eventos, 'notificaciones' => $notificaciones]);
+        $categorias = Categoria::all();
 
+        return view('miseventos', [
+            'eventos' => $eventos,
+            'notificaciones' => $notificaciones,
+            'categoria' => $categorias,
+        ]);
+    }
+
+    
+    public function mostrarEventosView(Request $request)
+    {
+        $categorias = Categoria::all(); 
+        
+        $eventos = Evento::filtrarPorCategoria($request->categoria)->get();
+    
+        return view('mostrarEventos', [
+            'eventos' => $eventos,
+            'categorias' => $categorias, 
+        ]);
     }
 
 

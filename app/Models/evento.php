@@ -26,9 +26,18 @@ class Evento extends Model
     ];
 
 
+    public function scopeFiltrarPorCategoria($query, $categoriaId)
+    {
+        if ($categoriaId) {
+            return $query->where('categoria_id', $categoriaId);
+        }
+    
+        return $query;
+    }
+
     public function categoria()
     {
-        return $this->belongsTo(Categoria::class);
+        return $this->belongsTo(Categoria::class, 'categoria_id');
     }
 
     public function invitaciones()
