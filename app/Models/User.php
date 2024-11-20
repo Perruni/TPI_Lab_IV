@@ -49,7 +49,7 @@ class User extends Authenticatable
 
     public function permisos()
     {
-        return $this->hasMany(Permiso::class);
+        return $this->hasOne(Permiso::class);
     }
 
     public function eventos()

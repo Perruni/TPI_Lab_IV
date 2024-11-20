@@ -1,9 +1,3 @@
-<script>
-let map;
-let marker;
-
-</script>
-<script src="{{ asset('assets/js/mapwithinput.js') }}"></script>
 <button onclick="window.location.href = '/fullcalendar'" class="arrow-button">
     &larr;
 </button>
@@ -94,3 +88,6 @@ let marker;
 
     <button type="submit" class="form-button">Guardar Evento</button>
 </form>
+
+     
+<script src="{{ asset('assets/js/mapwithinput.js') }}"></script>
