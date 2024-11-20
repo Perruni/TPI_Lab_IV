@@ -20,6 +20,7 @@ class Permiso extends Model
         'eliminarIvitado',
         'modificar',
         'eliminarEvento',
+        'darPermisos',
     ];
 
     public function user()

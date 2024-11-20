@@ -33,6 +33,7 @@ use App\Http\Controllers\permisoscontroller;
 
 Route::middleware('auth')->group(function () {
     Route::get('/permisos', [permisoscontroller::class, 'index'])->name('evento.detallesevento');
+    Route::post('/actualizar-permisos', [permisoscontroller::class, 'actualizarPermisos'])->name('actualizar-permisos');
 
 });
 

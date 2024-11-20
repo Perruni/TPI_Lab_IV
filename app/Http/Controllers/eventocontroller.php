@@ -66,6 +66,8 @@ class eventocontroller extends Controller
 
         $userRol = User_roles::where('user_id', $userId)->get();
         if ($userRol->first()->organizador) {
+           
+
             return view('cargar',['categorias' => $categorias]);
         }
         else {
@@ -97,7 +99,7 @@ class eventocontroller extends Controller
         $fechaInicioCompleta = Carbon::parse($request->fechaInicio . ' ' . $request->horaInicio);
         $fechaFinCompleta = Carbon::parse($request->fechaFin . ' ' . $request->horaFin);
         
-        if ($fechaInicioCompleta->isToday() && $fechaFinCompleta->lte($fechaInicioCompleta)) {
+        if ($fechaFinCompleta->lte($fechaInicioCompleta)) {
             return redirect()->back()->withErrors(['horaFin' => 'La hora de fin debe ser mayor que la hora de inicio si el evento es hoy.']);
         }
         
@@ -117,16 +119,7 @@ class eventocontroller extends Controller
         ]);
 
         return redirect()->route('miseventos')->with('message', 'Evento guardado con éxito.');
-    }
-    //aca termina
-
-    /*Esto es para mostrar el mapa*/
-    public function showMap()
-    {
-        $apiKey = config('services.google_maps.api_key');
-         return view('formcarga-evento',compact('apiKey'));
-    }
-
+    }    
     
 
     public function edit($id)
@@ -134,7 +127,10 @@ class eventocontroller extends Controller
         $evento = Evento::findOrFail($id);
         $userId = Auth::id(); 
 
-        return view('edit', compact('evento', 'userId'));
+        $apiKey = config('services.google_maps.api_key');
+
+        return view('edit', compact('evento', 'userId', 'apiKey'));
+
     }
 
     public function update(Request $request, $id)
@@ -144,24 +140,35 @@ class eventocontroller extends Controller
         $validated = $request->validate([
             'nombreEvento' => 'required|string|max:255',
             'descripcion' => 'required|string',
-            'fechaInicio' => 'required|date',
+            'fechaInicio' => 'required|date|after_or_equal:' . Carbon::tomorrow()->toDateString(),
             'horaInicio' => 'required|date_format:H:i',
             'fechaFin' => 'required|date|after_or_equal:fechaInicio',
             'horaFin' => 'required|date_format:H:i',
-            'color' => 'required|string|size:7',            
-        ]);                
+            'categoria_id' => 'required|exists:categorias,id',
+            'direccion' => 'required|string',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+        
+        ]);        
         
 
         $fechaInicioCompleta = Carbon::parse($validated['fechaInicio'] . ' ' . $validated['horaInicio']);
         $fechaFinCompleta = Carbon::parse($validated['fechaFin'] . ' ' . $validated['horaFin']);
         
+        if ($fechaFinCompleta->lte($fechaInicioCompleta)) {
+            return redirect()->back()->withErrors(['horaFin' => 'La hora de fin debe ser mayor que la hora de inicio si el evento es hoy.']);
+        }
+
         $evento->update([
             'nombreEvento' => $validated['nombreEvento'],
             'descripcion' => $validated['descripcion'],
             'fechaInicio' => $fechaInicioCompleta,
             'fechaFin' => $fechaFinCompleta,
             'color' => $validated['color'],
-            'allDay' => $request['allDay'] ? true : false,
+            'publico' => $validated['publico'] ? true : false,
+            'direccion' => $validated['direccion'],
+            'latitude' => $validated['latitude'],
+            'longitude' => $validated['longitude'],
 
         ]);
         
@@ -207,7 +214,7 @@ class eventocontroller extends Controller
         $permisos = Permiso::where('event_id', $id)
                             ->with('user')
                             ->get();
-
+        
         return view('eventoDetallado', [
             'evento' => $evento,
             'permisos' => $permisos,
