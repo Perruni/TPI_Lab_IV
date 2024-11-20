@@ -49,8 +49,8 @@
                         <label class="form-label">Ubicación del evento</label>
                         <div id="mapedit" class="map-container"></div>
                     </div>
-                    <input type="hidden" id="latitud" name="latitude" value="-29.14383470536903">
-                    <input type="hidden" id="longitud" name="longitude" value="-59.26513140291266">
+                    <input type="hidden" id="latitud" name="latitude" value={{ $evento->latitude }}>
+                    <input type="hidden" id="longitud" name="longitude" value={{ $evento->longitude }}>
                     
                     <div class="row mb-4">
                         <div class="col-12">
@@ -83,9 +83,10 @@
                                                         @else
                                                             <span class="badge bg-warning">{{ ucfirst($permiso->asistencia) }}</span>
                                                         @endif
-                                                    </td>
+                                                    </td>                                                    
                                                     <td>
                                                         <x-eliminarinvitado :eliminarInvitado="true" :permiso="$permiso" />
+                                                        <x-modificarpermisos :invitadoId="$permiso->user_id" :eventId="$evento->id" :permiso="$permiso" />
                                                     </td>
                                                 </tr>
                                                 

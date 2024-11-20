@@ -27,6 +27,20 @@
         <textarea id="descripcion" name="descripcion" rows="4" class="form-control form-control-lg" required>{{ old('descripcion', $evento->descripcion) }}</textarea>
     </div>
 
+
+    <div class="form-group">
+        <label for="categoria" class="form-label">Categoría</label>
+        <select name="categoria_id" id="categoria" class="form-input" required>
+            <option value="" disabled selected>Seleccione una categoría</option>
+            @foreach ($categorias as $categoria)
+            <option value="{{ $categoria->id }}" 
+                {{ old('categoria_id', $evento->categoria_id) == $categoria->id ? 'selected' : '' }}>
+                {{ $categoria->nombre }}
+            </option>
+            @endforeach
+        </select>
+    </div>
+
     <div class="row">
         <div class="col-md-6 mb-4">
             <label for="fechaInicio" class="form-label">Fecha de Inicio:</label>
@@ -51,17 +65,25 @@
             <input type="time" id="horaFin" name="horaFin" class="form-control form-control-lg" 
                    value="{{ old('horaFin', date('H:i', strtotime($evento->fechaFin))) }}" required>
         </div>
-    </div>   
-
-    <div class="mb-4">
-        <label for="color" class="form-label">Color:</label>
-        <input type="color" id="color" name="color" class="form-control form-control-lg" value="{{ old('color', $evento->color) }}">
-    </div>
+    </div>      
 
     <div class="form-check mb-4">        
-        <input type="checkbox" id="allDay" name="allDay" class="form-check-input" {{  $evento->allDay ? 'checked' : '' }}>
-        <label for="allDay" class="form-check-label">Todo el día</label>
+        <input type="checkbox" id="publico" name="publico" class="form-check-input" {{  $evento->publico ? 'checked' : '' }}>
+        <label for="publico" class="form-check-label">Publico</label>
     </div>    
+
+    <div class="form-group">
+        <label class="form-label">Dirección</label>
+        <input class= "form-input" type="text" id="autocomplete" name="direccion"></input>        
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">Ubicación del evento</label>
+        <div id="mapedit" class="map-container"></div>
+    </div>
+
+    <input type="hidden" id="latitud" name="latitude">
+    <input type="hidden" id="longitud" name="longitude">
 
     <div class="d-grid">
         <button type="submit" class="btn btn-primary btn-lg">Actualizar Evento</button>
@@ -69,3 +91,10 @@
 </form>
 
 @endsection
+
+<script>
+    let map;
+    let marker;
+    
+    </script>
+    <script src="{{ asset('assets/js/mapwithinput.js') }}" defer></script>
