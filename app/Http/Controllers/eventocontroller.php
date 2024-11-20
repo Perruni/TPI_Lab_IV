@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use App\Models\Notificacion;
+use Illuminate\Support\Facades\DB;
 
 class eventocontroller extends Controller
 {
@@ -179,7 +180,7 @@ class eventocontroller extends Controller
     
     public function mostrarEventos()
     {
-        $eventos = Evento::all(); //Aca iria la logica para ver solo los publicos
+        $eventos = Evento::where('publico', true)->get();
         return view('mostrarEventos', compact('eventos'));
     }
 
@@ -196,32 +197,20 @@ class eventocontroller extends Controller
         ]);
     }
 
-
     public function buscarEventos(Request $request)
-        {
-            $search = $request->input('search');
-            $userId = Auth::id();
-    
-            //$categoriaId = $request->input('categoriaId');
-            
-            $eventos = Evento::where(function($query) use ($search) {
-                    if ($search) {
-                        $query->where('name', 'like', '%' . $search . '%');
-                    }
-                    //if ($categoriaId) {
-                    //    $query->where('categoria_id', $categoriaId);
-                    //}
-                })
-                ->whereNotIn(function($subquery) use($userId) {
-                    $subquery->select('event_id')
-                            ->from('permisos')
-                            ->where('user_id', $userId);
-                })
-                ->where('user_id', '<>', $userId)
-                ->get();
+{
+    $search = $request->input('search'); // Captura el término de búsqueda
 
-            return view('buscarEventos', compact('eventos'));
-        }
+    // Construye la consulta para buscar solo eventos públicos
+    $eventos = Evento::where('publico', true) // Filtra por eventos públicos
+        ->when($search, function ($query, $search) {
+            $query->where('nombreEvento', 'like', '%' . $search . '%'); // Filtra por nombre del evento
+        })
+        ->get();
+
+    return view('buscarEventos', compact('eventos'));
+}
+
 
     public function eliminarInvitado($invitadoId)
     {

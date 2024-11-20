@@ -2,6 +2,19 @@
 
 @section('content')
 
+
+</style>
+
+<div class="container">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('fullcalendar') }}">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Buscar Eventos
+            </ol>
+        </nav>
+</div>
+
 <div class="container">
     <h2 class="mb-4">Resultados de la Búsqueda</h2>
 

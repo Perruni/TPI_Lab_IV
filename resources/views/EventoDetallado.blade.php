@@ -17,6 +17,15 @@
 @endif
 
 <div class="container">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('fullcalendar') }}">Inicio</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('miseventos') }}">Mis Eventos</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ $evento->nombreEvento }}</li>
+            </ol>
+        </nav>
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow-lg rounded-4">

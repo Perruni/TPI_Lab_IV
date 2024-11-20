@@ -15,9 +15,20 @@
 @endif
 
 
+
   <button onclick="window.location.href = '/fullcalendar'" class="arrow-button">
     &larr;
 </button>
+<div class="container">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('fullcalendar') }}">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Mis Eventos
+                    
+            </ol>
+        </nav>
+</div>
 <table class="table">
     <thead>
         <tr>
