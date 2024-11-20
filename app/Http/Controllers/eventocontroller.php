@@ -8,7 +8,6 @@ use App\Models\evento;
 use App\Models\Categoria;
 use App\Models\Permiso;
 use App\Models\Invitacion;
-use App\Models\User_roles;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
@@ -43,13 +42,10 @@ class eventocontroller extends Controller
 
     public function cargar(){      
 
-        $userId = Auth::id();
-        $categorias = Categoria::all();
-
-        $userRol = User_roles::where('user_id', $userId)->get();
-        if ($userRol->first()->organizador) {
-           
-
+        $user = Auth::user();
+        $categorias = Categoria::all();        
+    
+        if ($user->rol === 'organizador') {
             return view('cargar',['categorias' => $categorias]);
         }
         else {

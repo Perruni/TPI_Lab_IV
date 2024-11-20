@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\evento;
 use App\Models\Permiso;
 use App\Models\User;
-use App\Models\User_roles;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use App\Http\Controllers\Controller;
@@ -45,18 +44,17 @@ class invitacioncontroller extends Controller
         $evento = Evento::findOrFail($eventoId);
         $eventoOwnerId = $evento->user_id;
 
-        $userId = Auth::id();
-        $userRol= User_roles::where('user_id', $userId)->first();
+        $user = Auth::user();
 
         $permisosIds = Permiso::where('event_id', $eventoId)->pluck('user_id');
 
         $invitadosIds = Invitacion::where('event_id', $eventoId)->pluck('user_id');
 
-        $usuariosInvitados = User_roles::where('invitado', true)->pluck('user_id');
+        $usuariosInvitados = User::where('rol', 'invitado')->pluck('id');
 
-        $usuariosOrganizadores = User_roles::where('organizador', true)->pluck('user_id');
+        $usuariosOrganizadores = User::where('rol', 'organizador')->pluck('id');
         
-        if ($userRol->organizador) {
+        if ($user->rol === 'organizador') {
             $users = User::where(function($query) use ($search) {
                 $query->where('name', 'like', '%' . $search . '%')
                       ->orWhere('email', 'like', '%' . $search . '%');
@@ -161,17 +159,16 @@ class invitacioncontroller extends Controller
 
     public function aceptar($InvitacionID)
     {
-        $userId = Auth::id();
-        $userRol= User_roles::where('user_id', $userId)->first();
+        $user = Auth::user();
 
         $invitacion = Invitacion::where('id', $InvitacionID)
-                                ->where('user_id', $userId)
+                                ->where('user_id', $user->id)
                                 ->firstorFail();
         
         $invitacion->update(['asistencia' => 'aceptada']);
         $invitado = User::findOrFail($invitacion->user_id);
 
-        if ($userRol->organizador) {
+        if ($user->rol === 'organizador') {
             Permiso::updateOrCreate(
                 [
                     'user_id' => $invitacion->user_id,
@@ -210,17 +207,16 @@ class invitacioncontroller extends Controller
     public function rechazar($InvitacionID)
     {
 
-        $userId = Auth::id();
-        $userRol= User_roles::where('user_id', $userId)->first();
+        $user = Auth::user();
         $invitacion = Invitacion::where('id', $InvitacionID)
-                                ->where('user_id', $userId)
+                                ->where('user_id', $user->id)
                                 ->firstorFail();
         
         $invitacion->update(['asistencia' => 'rechazada']);
 
         $invitado = User::findOrFail($invitacion->user_id);
 
-        if ($userRol->organizador) {
+        if ($user->rol === 'organizador') {
             Permiso::updateOrCreate(
                 [
                     'user_id' => $invitacion->user_id,
