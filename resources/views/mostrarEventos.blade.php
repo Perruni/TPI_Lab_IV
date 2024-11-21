@@ -4,21 +4,9 @@
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
 @section('content')
-<button onclick="window.location.href = '/fullcalendar'" class="arrow-button">
-    &larr;
-</button>
+<x-arrow-button href="/fullcalendar" />
 
-<form action="{{ route('mostrarEventos') }}" method="GET">
-        <label for="categoria">Filtrar por categoría:</label>
-        <select name="categoria" id="categoria" onchange="this.form.submit()">
-            <option value="">Todas</option>
-            @foreach($categorias as $cat)
-                <option value="{{ $cat->id }}" {{ request('categoria') == $cat->id ? 'selected' : '' }}>
-                    {{ $cat->nombre }}
-                </option>
-            @endforeach
-        </select>
-    </form>
+<x-category-filter-form-mostrar-eventos :categorias="$categorias" />
     
 <div class="container">
     <h1 class="my-4">Eventos Disponibles</h1>

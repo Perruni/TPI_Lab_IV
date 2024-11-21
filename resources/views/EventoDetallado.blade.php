@@ -1,9 +1,9 @@
 @extends('layouts.index')
 
 @section('content')
-<button onclick="window.location.href = '/fullcalendar'" class="arrow-button">
-    &larr;
-</button>
+
+<x-arrow-button href="/fullcalendar" />
+
 <div class="container-fluid py-5" min-height: 100vh;">
 
     @if(session('success'))
@@ -45,8 +45,8 @@
                     </div>                 
 
                     <div class="form-group">
-                        <label class="form-label">Dirección: {{ $evento->direccion }}</label>
-                        <label class="form-label">Ubicación del evento</label>
+                        <label id="direccion" class="form-label">Dirección: {{ $evento->direccion }}</label>
+                        <label id ="ubicacion" class="form-label">Ubicación del evento</label>
                         <div id="mapedit" class="map-container"></div>
                     </div>
                     <input type="hidden" id="latitud" name="latitude" value={{ $evento->latitude }}>
@@ -129,4 +129,5 @@ function placeMarker(location) {
 
 } 
 </script>
+
 @endsection

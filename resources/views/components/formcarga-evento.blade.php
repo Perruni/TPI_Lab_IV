@@ -1,6 +1,4 @@
-<button onclick="window.location.href = '/fullcalendar'" class="arrow-button">
-    &larr;
-</button>
+<x-arrow-button href="/fullcalendar" />
 
 @if(session('success'))
 <div class="alert alert-success">
@@ -35,6 +33,7 @@
         <label for="descripcion" class="form-label">Descripción</label>
         <textarea id="descripcion" name="descripcion" class="form-input" rows="2" placeholder="Descripción del evento" required></textarea>
     </div>
+
 
     <div class="form-group">
         <label for="categoria" class="form-label">Categoría</label>

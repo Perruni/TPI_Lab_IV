@@ -177,6 +177,7 @@
         background-color: #191c24 !important;
       }
 
+      /*Cuestom de boton de arrow*/
       .arrow-button {
         height: 26px;
         width: 100px;
@@ -196,4 +197,4 @@
         background-color: darkorange; 
     }
 
-      
+    

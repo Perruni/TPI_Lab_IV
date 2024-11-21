@@ -127,9 +127,11 @@ class eventocontroller extends Controller
         $evento = Evento::findOrFail($id);
         $userId = Auth::id(); 
 
-        $apiKey = config('services.google_maps.api_key');
+        $categorias = Categoria::all();
 
-        return view('edit', compact('evento', 'userId', 'apiKey'));
+        return view('edit', ['evento' => $evento,'userId' => $userId,
+            'categorias' => $categorias,
+        ]);
 
     }
 

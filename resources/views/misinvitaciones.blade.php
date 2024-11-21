@@ -1,7 +1,7 @@
 @extends('layouts.index')
 
 @section('content')
-
+<x-arrow-button href="/fullcalendar" />
 @if(session('success'))
     <div class="alert alert-success">
         {{ session('success') }}
