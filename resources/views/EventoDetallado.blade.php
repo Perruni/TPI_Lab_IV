@@ -58,9 +58,11 @@
                         <label class="form-label">Ubicación del evento</label>
                         <div id="mapedit" class="map-container"></div>
                     </div>
-                    <input type="hidden" id="latitud" name="latitude" value="-29.14383470536903">
-                    <input type="hidden" id="longitud" name="longitude" value="-59.26513140291266">
+                    <input type="hidden" id="latitud" name="latitude" value="{{ $evento->latitude }}">
+                    <input type="hidden" id="longitud" name="longitude" value="{{ $evento->longitude }}">
                     
+
+                    @if(auth()->user()->id === $evento->user_id)
                     <div class="row mb-4">
                         <div class="col-12">
                             <h3>Invitados</h3>
@@ -105,7 +107,7 @@
                             @endif
                         </div>
                     </div>
-
+                    @endif
                     <a href="{{ route('miseventos') }}" class="btn btn-primary"><i class="bi bi-arrow-left-circle"></i> Volver a Eventos</a>
                 </div>
             </div>

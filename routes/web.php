@@ -36,7 +36,7 @@ Route::middleware('auth')->group(function () {
 
 });
 
-use App\Http\Controllers\Eventocontroller;
+use App\Http\Controllers\eventocontroller;
 use Illuminate\Types\Relations\Role;
 
 Route::middleware('auth')->group(function () {

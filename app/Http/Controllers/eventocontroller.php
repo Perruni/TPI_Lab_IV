@@ -178,10 +178,19 @@ class eventocontroller extends Controller
 
     }
     
-    public function mostrarEventos()
+    public function mostrarEventos(Request $request)
     {
-        $eventos = Evento::where('publico', true)->get();
-        return view('mostrarEventos', compact('eventos'));
+        $categorias = Categoria::all();
+
+    $eventosQuery = Evento::where('publico', true);
+
+    if ($request->has('categoria_id') && $request->categoria_id != '') {
+        $eventosQuery->where('categoria_id', $request->categoria_id);
+    }
+
+    $eventos = $eventosQuery->get();
+
+    return view('mostrarEventos', compact('eventos', 'categorias'));
     }
 
     public function EventoDetallado($id)
@@ -199,12 +208,11 @@ class eventocontroller extends Controller
 
     public function buscarEventos(Request $request)
 {
-    $search = $request->input('search'); // Captura el término de búsqueda
+    $search = $request->input('search');
 
-    // Construye la consulta para buscar solo eventos públicos
-    $eventos = Evento::where('publico', true) // Filtra por eventos públicos
+    $eventos = Evento::where('publico', true) 
         ->when($search, function ($query, $search) {
-            $query->where('nombreEvento', 'like', '%' . $search . '%'); // Filtra por nombre del evento
+            $query->where('nombreEvento', 'like', '%' . $search . '%'); 
         })
         ->get();
 
