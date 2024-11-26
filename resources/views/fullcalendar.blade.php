@@ -35,7 +35,7 @@
                     @endif
                     allDay: {{ $evento->allDay ? 'true' : 'false' }},
                     color: '{{ $evento->color }}',
-                    className: 'evento-personalizado' // Clase personalizada
+                    className: 'evento-personalizado' 
                 } @if (!$loop->last), @endif
             @endforeach
         ];     

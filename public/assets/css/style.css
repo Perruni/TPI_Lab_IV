@@ -21133,3 +21133,67 @@ div.tagsinput {
   flex-grow: 1; }
 
 /*# sourceMappingURL=maps/style.css.map */
+
+.formulario-filtrado {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  background-color: #FF8800; 
+  color: #000000; 
+  padding: 5px 10px; 
+  border-radius: 10px; 
+  width: fit-content; 
+  margin-top: 10px; 
+}
+
+.formulario-filtrado label {
+  margin-right: 10px;
+  font-weight: bold; 
+  font-size: 14px;
+}
+
+.formulario-filtrado select {
+  padding: 5px;
+  border-radius: 3px;
+  border: 1px solid #ddd; 
+  font-size: 14px;
+  background-color: #FFB84D; 
+  color: #000; 
+}
+
+.formulario-filtrado1 {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  background-color: #FF8800; 
+  color: #000000; 
+  padding: 5px 10px;
+  border-radius: 10px; 
+  width: fit-content; 
+  margin-top: 10px; 
+}
+
+.formulario-filtrado1 label {
+  margin-right: 10px; 
+  font-weight: bold; 
+  font-size: 14px; 
+}
+
+.formulario-filtrado1 select {
+  padding: 5px;
+  border-radius: 3px;
+  border: 1px solid #ddd; 
+  font-size: 14px;
+  background-color: #FFB84D; 
+  color: #000; 
+}
+
+.formulario-filtradoDiv {
+  display: flex;
+  justify-content: flex-end; 
+  margin-bottom: 30px;
+}
+
+
+
+

@@ -33,6 +33,7 @@ use App\Http\Controllers\permisoscontroller;
 
 Route::middleware('auth')->group(function () {
     Route::get('/permisos', [permisoscontroller::class, 'index'])->name('evento.detallesevento');
+    Route::post('/actualizar-permisos', [permisoscontroller::class, 'actualizarPermisos'])->name('actualizar-permisos');
 
 });
 
@@ -47,10 +48,11 @@ Route::post('/guardar',[eventocontroller::class, 'guardar'])->name('guardar');
 Route::get('/edit/{id}', [eventocontroller::class, 'edit'])->name('edit');
 Route::put('/update/{id}',[eventocontroller::class, 'update'])->name('update');
 Route::delete('/borrar/{id}',[eventocontroller::class, 'borrar'])->name('borrar');
-Route::get('/alleventos', [eventoController::class, 'mostrarEventos'])->name('mostrareventos');
 Route::get('/eventos/{id}', [eventoController::class, 'EventoDetallado'])->name('eventodetallado');
 Route::get('/buscar-eventos', [eventoController::class, 'buscarEventos'])->name('eventos.buscar');
 Route::post('/eliminar-invitado/{invitacionId}', [eventoController::class, 'eliminarInvitado'])->name('eliminar-invitado');
+
+Route::get('/mostrarEventos', [EventoController::class, 'mostrarEventosView'])->name('mostrarEventos');
 
 });
 Route::middleware('auth')->group(function () {

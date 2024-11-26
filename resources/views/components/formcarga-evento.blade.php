@@ -1,12 +1,4 @@
-<script>
-let map;
-let marker;
-
-</script>
-<script src="{{ asset('assets/js/mapwithinput.js') }}"></script>
-<button onclick="window.location.href = '/fullcalendar'" class="arrow-button">
-    &larr;
-</button>
+<x-arrow-button href="/fullcalendar" />
 
 @if(session('success'))
 <div class="alert alert-success">
@@ -41,6 +33,7 @@ let marker;
         <label for="descripcion" class="form-label">Descripción</label>
         <textarea id="descripcion" name="descripcion" class="form-input" rows="2" placeholder="Descripción del evento" required></textarea>
     </div>
+
 
     <div class="form-group">
         <label for="categoria" class="form-label">Categoría</label>
@@ -94,3 +87,6 @@ let marker;
 
     <button type="submit" class="form-button">Guardar Evento</button>
 </form>
+
+     
+<script src="{{ asset('assets/js/mapwithinput.js') }}"></script>

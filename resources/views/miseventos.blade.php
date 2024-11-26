@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title','Ingrese los datos del evento')
-
+<link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 @section('content')
 
 
@@ -13,6 +13,10 @@
     {{ session('error') }}
 </div>
 @endif
+
+<x-arrow-button href="/fullcalendar" />
+
+<x-category-filter-form :categoria="$categoria" />
 
 
 
@@ -29,6 +33,7 @@
             </ol>
         </nav>
 </div>
+
 <table class="table">
     <thead>
         <tr>
@@ -37,7 +42,7 @@
             <th scope="col">Fecha de Inicio</th>
             <th scope="col">Fecha de Fin</th>
             <th scope="col">Publico</th>
-            <th scope="col">Categoría</th>
+            <th scope="col">Categoría</th>                                          
             <th scope="col">Acciones</th>
         </tr>
     </thead>
@@ -51,22 +56,11 @@
                 <td>{{ $evento->publico ? 'Sí' : 'No' }}</td>
                 <td>{{ $evento->categoria->nombre ?? 'Sin Categoría' }}</td>
                 <td>
-                    <a href="{{ route('edit', $evento->id) }}" class="btn btn-warning"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-                      </svg></i></a>
-                    <a href="{{ route('eventodetallado', $evento->id) }}" class="btn btn-info"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-heading" viewBox="0 0 16 16">
-                        <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
-                        <path d="M3 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m0-5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5z"/>
-                      </svg></i></a>
-                    <form action="{{ route('borrar', $evento->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este evento?')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                          </svg></i></button>
-                    </form>
+                    <x-edit-button :route="route('edit', $evento->id)" />
+
+                    <x-detail-button :route="route('eventodetallado', $evento->id)" />
+
+                    <x-delete-button :route="route('borrar', $evento->id)" />
                 </td>
             </tr>
         @endforeach
@@ -74,5 +68,55 @@
 </table>
 
   
+<style>
+.evento-actualizacion-formulario {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
+.evento-campo {
+    margin-bottom: 15px;
+}
+
+.evento-etiqueta {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.evento-entrada {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.evento-botones {
+    display: flex;
+    justify-content: space-between;
+}
+
+.evento-boton {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.evento-boton-actualizar {
+    background-color: #28a745;
+    color: white;
+}
+
+.evento-boton-cancelar {
+    background-color: #dc3545;
+    color: white;
+    text-decoration: none;
+}
+</style>
 @endsection
