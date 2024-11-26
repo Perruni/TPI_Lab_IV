@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'rol',
     ];
 
     /**
@@ -59,8 +60,5 @@ class User extends Authenticatable
                     ->withTimestamps();
     }
     
-    public function userRole(): HasOne
-    {
-        return $this->hasOne(user_roles::class);
-    }
+    
 }
