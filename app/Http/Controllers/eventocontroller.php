@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use App\Models\Notificacion;
+use Illuminate\Support\Facades\DB;
 
 class eventocontroller extends Controller
 {
@@ -204,10 +205,19 @@ class eventocontroller extends Controller
 
     }
     
-    public function mostrarEventos()
+    public function mostrarEventos(Request $request)
     {
-        $eventos = Evento::all(); //Aca iria la logica para ver solo los publicos
-        return view('mostrarEventos', compact('eventos'));
+        $categorias = Categoria::all();
+
+    $eventosQuery = Evento::where('publico', true);
+
+    if ($request->has('categoria_id') && $request->categoria_id != '') {
+        $eventosQuery->where('categoria_id', $request->categoria_id);
+    }
+
+    $eventos = $eventosQuery->get();
+
+    return view('mostrarEventos', compact('eventos', 'categorias'));
     }
 
     public function EventoDetallado($id)
@@ -223,32 +233,19 @@ class eventocontroller extends Controller
         ]);
     }
 
-
     public function buscarEventos(Request $request)
-        {
-            $search = $request->input('search');
-            $userId = Auth::id();
-    
-            //$categoriaId = $request->input('categoriaId');
-            
-            $eventos = Evento::where(function($query) use ($search) {
-                    if ($search) {
-                        $query->where('name', 'like', '%' . $search . '%');
-                    }
-                    //if ($categoriaId) {
-                    //    $query->where('categoria_id', $categoriaId);
-                    //}
-                })
-                ->whereNotIn(function($subquery) use($userId) {
-                    $subquery->select('event_id')
-                            ->from('permisos')
-                            ->where('user_id', $userId);
-                })
-                ->where('user_id', '<>', $userId)
-                ->get();
+{
+    $search = $request->input('search');
 
-            return view('buscarEventos', compact('eventos'));
-        }
+    $eventos = Evento::where('publico', true) 
+        ->when($search, function ($query, $search) {
+            $query->where('nombreEvento', 'like', '%' . $search . '%'); 
+        })
+        ->get();
+
+    return view('buscarEventos', compact('eventos'));
+}
+
 
     public function eliminarInvitado($invitadoId)
     {

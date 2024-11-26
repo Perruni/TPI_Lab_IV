@@ -13,6 +13,17 @@
     </div>
 @endif
 
+<div class="container">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('fullcalendar') }}">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Invitar
+            </ol>
+        </nav>
+</div>
+
+
 <h3>Sección de Invitación</h3>	
 
 <form action="{{ route('buscarinvitados') }}" method="GET">

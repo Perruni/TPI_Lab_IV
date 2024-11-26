@@ -12,7 +12,20 @@
     </div>
 @endif
 @if ($invitaciones->isEmpty())
+
+<div class="container">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('fullcalendar') }}">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Invitaciones
+            </ol>
+        </nav>
+</div>
+
 <div class="alert alert-dark d-flex align-items-center" role="alert">
+
+
     <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
     <div>
       No hay invitaciones pendientes.

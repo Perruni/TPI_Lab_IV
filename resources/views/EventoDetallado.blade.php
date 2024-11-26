@@ -17,6 +17,15 @@
 @endif
 
 <div class="container">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('fullcalendar') }}">Inicio</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('miseventos') }}">Mis Eventos</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ $evento->nombreEvento }}</li>
+            </ol>
+        </nav>
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow-lg rounded-4">
@@ -49,9 +58,13 @@
                         <label id ="ubicacion" class="form-label">Ubicación del evento</label>
                         <div id="mapedit" class="map-container"></div>
                     </div>
+
                     <input type="hidden" id="latitud" name="latitude" value={{ $evento->latitude }}>
                     <input type="hidden" id="longitud" name="longitude" value={{ $evento->longitude }}>
+
                     
+
+                    @if(auth()->user()->id === $evento->user_id)
                     <div class="row mb-4">
                         <div class="col-12">
                             <h3>Invitados</h3>
@@ -97,7 +110,7 @@
                             @endif
                         </div>
                     </div>
-
+                    @endif
                     <a href="{{ route('miseventos') }}" class="btn btn-primary"><i class="bi bi-arrow-left-circle"></i> Volver a Eventos</a>
                 </div>
             </div>

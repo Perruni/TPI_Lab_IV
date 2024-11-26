@@ -32,7 +32,7 @@
             </label>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
+        <div class="flex flex-col items-center justify-center mt-6 space-y-1">
             @if (Route::has('password.request'))
                 <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
                     {{ __('Olvidaste tu contraseña?') }}
@@ -44,7 +44,8 @@
             {{ __('No tienes cuenta? Regístrate') }}
         </a>
         @endif
-
+        </div>
+        <div class="mt-8 text-center">
             <x-primary-button class="ms-3">
                 {{ __('Iniciar sesion') }}
             </x-primary-button>

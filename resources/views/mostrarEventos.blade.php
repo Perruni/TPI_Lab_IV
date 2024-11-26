@@ -4,11 +4,20 @@
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
 @section('content')
+
 <x-arrow-button href="/fullcalendar" />
 
 <x-category-filter-form-mostrar-eventos :categorias="$categorias" />
     
 <div class="container">
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url('/fullcalendar') }}">Inicio</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Eventos Públicos</li>
+    </ol>
+</nav>
+
     <h1 class="my-4">Eventos Disponibles</h1>
     <div class="row">
         @foreach($eventos as $evento)
@@ -25,9 +34,12 @@
                 <div class="card-footer">
                     <a href="{{ route('eventodetallado', $evento->id) }}" class="btn btn-primary">Ver Detalles</a>
                 </div>
+
             </div>
         </div>
-        @endforeach
     </div>
+    @endforeach
+</div>
+
 </div>
 @endsection
