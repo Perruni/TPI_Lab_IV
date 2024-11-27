@@ -27,7 +27,8 @@
                     <h5>{{ $evento->nombreEvento }}</h5>
                 </div>
                 <div class="card-body">
-                    <p><strong>Descripción:</strong> {{ $evento->descripcion }}</p>
+                    <p><strong>Titulo:</strong> {{ $evento->nombreEvento }}</p>
+                    <p><strong>Categoria:</strong>{{ $evento->categoria->nombre }}</p>
                     <p><strong>Fecha Inicio:</strong> {{ $evento->fechaInicio }} {{ $evento->horaInicio }}</p>
                     <p><strong>Fecha Fin:</strong> {{ $evento->fechaFin }} {{ $evento->horaFin }}</p>                  
                 </div>
