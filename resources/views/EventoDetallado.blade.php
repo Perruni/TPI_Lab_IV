@@ -64,7 +64,6 @@
 
                     
 
-                    @if(auth()->user()->id === $evento->user_id)
                     <div class="row mb-4">
                         <div class="col-12">
                             <h3>Invitados</h3>
@@ -110,7 +109,6 @@
                             @endif
                         </div>
                     </div>
-                    @endif
                     <a href="{{ route('miseventos') }}" class="btn btn-primary"><i class="bi bi-arrow-left-circle"></i> Volver a Eventos</a>
                 </div>
             </div>

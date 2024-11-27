@@ -165,6 +165,8 @@ class invitacioncontroller extends Controller
                                 ->where('user_id', $user->id)
                                 ->firstorFail();
         
+        $evento = Evento::findOrFail($invitacion->event_id);
+        
         $invitacion->update(['asistencia' => 'aceptada']);
         $invitado = User::findOrFail($invitacion->user_id);
 
@@ -184,7 +186,24 @@ class invitacioncontroller extends Controller
                     'darPermisos' => true,
                 ]
             );
-        } else {
+        } elseif ($evento->publico) {
+            Permiso::updateOrCreate(
+                [
+                    'user_id' => $invitacion->user_id,
+                    'event_id' => $invitacion->event_id,
+                ],
+                [
+                    'asistencia' => 'aceptada',
+                    'verEvento' => true,
+                    'invitar' => true,
+                    'eliminarIvitado' => false,
+                    'modificar' => false,
+                    'eliminarEvento' => false,
+                    'darPermisos' => false,
+                ]
+            );
+        }
+        else {
             Permiso::updateOrCreate(
                 [
                     'user_id' => $invitacion->user_id,

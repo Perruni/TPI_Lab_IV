@@ -18,11 +18,6 @@
 
 <x-category-filter-form :categoria="$categoria" />
 
-
-
-  <button onclick="window.location.href = '/fullcalendar'" class="arrow-button">
-    &larr;
-</button>
 <div class="container">
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="mb-4">

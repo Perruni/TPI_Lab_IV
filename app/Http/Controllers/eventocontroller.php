@@ -293,50 +293,7 @@ class eventocontroller extends Controller
         return redirect()->back()->with('success', 'Invitado eliminado correctamente.');
     }
 
-    public function mostrarEventos()
-    {
-        $eventos = Evento::all(); //Aca iria la logica para ver solo los publicos
-        return view('mostrarEventos', compact('eventos'));
-    }
 
-    public function EventoDetallado($id)
-    {
-        $evento = Evento::findOrFail($id); 
-        $permisos = Permiso::where('event_id', $id)
-                            ->with('user')
-                            ->get();
-        
-        return view('eventoDetallado', [
-            'evento' => $evento,
-            'permisos' => $permisos,
-        ]);
-    }
-
-
-    public function buscarEventos(Request $request)
-        {
-            $search = $request->input('search');
-            $userId = Auth::id();
-    
-            //$categoriaId = $request->input('categoriaId');
-            
-            $eventos = Evento::where(function($query) use ($search) {
-                    if ($search) {
-                        $query->where('name', 'like', '%' . $search . '%');
-                    }
-                    //if ($categoriaId) {
-                    //    $query->where('categoria_id', $categoriaId);
-                    //}
-                })
-                ->whereNotIn(function($subquery) use($userId) {
-                    $subquery->select('event_id')
-                            ->from('permisos')
-                            ->where('user_id', $userId);
-                })
-                ->where('user_id', '<>', $userId)
-                ->get();
-
-            return view('buscarEventos', compact('eventos'));
-        }
+   
 
 }
