@@ -1,12 +1,10 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<p align="center"><a href="[https://laravel.com](https://github.com/Perruni/TPI_Lab_IV_Grup6)" target="_blank"> <img src="{{ asset('assets/images/logoeventosya.png') }}" width="400" alt="Logo EventosYa"></a></p>
 
 ## Antes de ejecutar el proyecto
 
 Se debe adquirir una clave de API de Google Maps, para ello se debe crear una cuenta en el sitio web de Google Cloud Platform.
 
 Luego, se debe crear una aplicación de Google Cloud Platform, con la cual se podrá obtener la clave de API.
-
-Una vez que se ha obtenido la clave de API, se debe crear un archivo llamado .env en la raíz del proyecto, y se debe agregar la clave de API en el archivo .env, con el nombre GOOGLE_API_KEY.
 
 Para obtener la clave de API, se debe seguir los siguientes pasos:
 
@@ -16,13 +14,15 @@ Para obtener la clave de API, se debe seguir los siguientes pasos:
 4. Una vez que se ha creado el proyecto, se debe seleccionar la opción "Claves y Credenciales".
 5. Luego la opcion de "Crear Credenciales", se debe seleccionar "API Key" o "Clave API".
 6. Despues debe deleccionar la opcion "Mostrar clave", y copiar la clave.
-7. Luego debe agregar la clave en el archivo .env en la raíz del proyecto, con el nombre API_KEY.
+7. Luego debe agregar la clave en el archivo .env en la raíz del proyecto, con el nombre API_KEY. (API_KEY = TU-API)
 
 ## Instalación de dependencias
 
 Para poder ejecutar el proyecto una vez clonado, se debe instalar las dependencias de npm, con el siguiente comando:
 
 npm install
+
+npm run build
 
 Esto instalará las dependencias necesarias para ejecutar el proyecto.
 
