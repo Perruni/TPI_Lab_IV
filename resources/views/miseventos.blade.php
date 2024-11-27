@@ -33,7 +33,6 @@
     <thead>
         <tr>
             <th scope="col">Nombre del Evento</th>
-            <th scope="col">Descripción</th>
             <th scope="col">Fecha de Inicio</th>
             <th scope="col">Fecha de Fin</th>
             <th scope="col">Publico</th>
@@ -45,7 +44,6 @@
         @foreach($eventos as $evento)
             <tr>
                 <td>{{ $evento->nombreEvento }}</td>
-                <td>{{ $evento->descripcion }}</td>
                 <td>{{ $evento->fechaInicio }}</td>
                 <td>{{ $evento->fechaFin }}</td>
                 <td>{{ $evento->publico ? 'Sí' : 'No' }}</td>
