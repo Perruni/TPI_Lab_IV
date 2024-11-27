@@ -18,7 +18,8 @@ Para obtener la clave de API, se debe seguir los siguientes pasos:
 4. Una vez que se ha creado el proyecto, se debe seleccionar la opción "Claves y Credenciales".
 5. Luego la opcion de "Crear Credenciales", se debe seleccionar "API Key" o "Clave API".
 6. Despues debe deleccionar la opcion "Mostrar clave", y copiar la clave.
-7. Luego debe agregar la clave en el archivo .env en la raíz del proyecto, con el nombre GOOGLE_API_KEY. (API_KEY = TU-API)
+7. Luego debe agregar la clave en el archivo .env en la raíz del proyecto, con el nombre GOOGLE_API_KEY. (GOOGLE_API_KEY = "TU-API")
+
 
 ## Instalación de dependencias
 
