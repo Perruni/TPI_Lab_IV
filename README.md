@@ -1,4 +1,4 @@
-<p align="center"><a href="[https://laravel.com](https://github.com/Perruni/TPI_Lab_IV_Grup6)" target="_blank"> <img src="{{ asset('assets/images/logoeventosya.png') }}" width="400" alt="Logo EventosYa"></a></p>
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 ## Antes de ejecutar el proyecto
 
