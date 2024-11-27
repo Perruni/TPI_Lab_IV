@@ -8,7 +8,6 @@ use App\Models\evento;
 use App\Models\Categoria;
 use App\Models\Permiso;
 use App\Models\Invitacion;
-use App\Models\User_roles;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
@@ -61,13 +60,10 @@ class eventocontroller extends Controller
 
     public function cargar(){      
 
-        $userId = Auth::id();
-        $categorias = Categoria::all();
-
-        $userRol = User_roles::where('user_id', $userId)->get();
-        if ($userRol->first()->organizador) {
-           
-
+        $user = Auth::user();
+        $categorias = Categoria::all();        
+    
+        if ($user->rol === 'organizador') {
             return view('cargar',['categorias' => $categorias]);
         }
         else {
@@ -204,7 +200,49 @@ class eventocontroller extends Controller
 
     }
     
-   
+
+    public function mostrarEventos(Request $request)
+    {
+        $categorias = Categoria::all();
+
+    $eventosQuery = Evento::where('publico', true);
+
+    if ($request->has('categoria_id') && $request->categoria_id != '') {
+        $eventosQuery->where('categoria_id', $request->categoria_id);
+    }
+
+    $eventos = $eventosQuery->get();
+
+    return view('mostrarEventos', compact('eventos', 'categorias'));
+    }
+
+    public function EventoDetallado($id)
+    {
+        $evento = Evento::findOrFail($id); 
+        $permisos = Permiso::where('event_id', $id)
+                            ->with('user')
+                            ->get();
+                            
+        return view('eventoDetallado', [
+            'evento' => $evento,
+            'permisos' => $permisos,
+        ]);
+    }
+
+    public function buscarEventos(Request $request)
+{
+    $search = $request->input('search');
+
+    $eventos = Evento::where('publico', true) 
+        ->when($search, function ($query, $search) {
+            $query->where('nombreEvento', 'like', '%' . $search . '%'); 
+        })
+        ->get();
+
+    return view('buscarEventos', compact('eventos'));
+}
+
+
 
     public function eliminarInvitado($invitadoId)
     {
