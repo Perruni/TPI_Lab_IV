@@ -22,26 +22,18 @@ class eventos extends Seeder
         'name' => 'UsuarioOrganizador',
         'email' => 'organizador@ejemplo.com',
         'password' => Hash::make('organizador'),
+        'rol' =>'organizador',
     ]);
     
-    User_roles::create([
-        'user_id' => $organizador->id,
-        'organizador' => true,
-        'invitado' => false,
-    ]);
+
 
     $invitado = User::create([
         'name' => 'UsuarioInvitado',
         'email' => 'invitado@ejemplo.com',
         'password' => Hash::make('invitado'),
+        'rol' =>'invitado'
     ]);
     
-    User_roles::create([
-        'user_id' => $invitado->id,
-        'organizador' => false,
-        'invitado' => true,
-    ]);
-
     $categoria = Categoria::find(1);
 
 
