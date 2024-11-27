@@ -151,7 +151,7 @@ class invitacioncontroller extends Controller
         $invitaciones = Invitacion::where('user_id', $userId)
                                 ->where('asistencia', 'pendiente')
                                 ->with('evento')
-                                ->get();                           
+                                ->paginate(5);                           
         
         return view('misinvitaciones', ['invitaciones' => $invitaciones]);
 

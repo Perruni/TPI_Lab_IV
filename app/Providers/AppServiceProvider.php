@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Notificacion;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +20,9 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot()
     {
+
+        Paginator::useBootstrapFive();
+
         view()->composer('*', function ($view) {
             if (Auth::check()) {
                 $userId = Auth::id();
