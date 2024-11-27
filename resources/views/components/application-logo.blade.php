@@ -1,0 +1,1 @@
+<img src="{{ asset('assets/images/logoeventosya.png') }}" alt="Logo de Eventos Ya" style="width: 250px; height: auto;" />
