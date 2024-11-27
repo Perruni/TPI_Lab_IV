@@ -8,7 +8,6 @@
           </svg>
        
     </button>
-
     <form action="{{ route('actualizar-permisos') }}" method="POST" class="dropdown-menu">
         @csrf
         <input type="hidden" name="invitado_id" value="{{ $invitadoId }}">
@@ -17,51 +16,45 @@
         <div class="col-md-6 mb-3">
             <label for="permiso">Modificar Permisos</label>
             <div>
-                <input type="checkbox" id="verEvento" name="permisos[]"
-                @if ($permiso->verEvento)
+                <input type="checkbox" id="verEvento" name="verEvento"                           
+                @if ($permiso->verEvento)                
                 checked
-                @endif
-                value="verEvento">                
+                @endif>                
                 <label for="verEvento">Ver Evento</label>
             </div>
             <div>
-                <input type="checkbox" id="invitar" name="permisos[]"
-                @if ($permiso->invitar)
+                <input type="checkbox" id="invitar" name="invitar"
+                @if ($permiso->invitar) 
                 checked
-                @endif
-                value="invitar">
+                @endif>
                 <label for="invitar">Invitar</label>
             </div>
             <div>
-                <input type="checkbox" id="eliminarInvitado" name="permisos[]"
+                <input type="checkbox" id="eliminarInvitado" name="eliminarInvitado"
                 @if($permiso->eliminarIvitado)
                 checked
-                @endif
-                value="eliminarInvitado">
+                @endif>
                 <label for="eliminarInvitado">Eliminar Invitado</label>
             </div>
             <div>
-                <input type="checkbox" id="modificar" name="permisos[]"
+                <input type="checkbox" id="modificar" name="modificar"
                 @if($permiso->modificar)
                 checked
-                @endif
-                value="modificar">
+                @endif>
                 <label for="modificar">Modificar Evento</label>
             </div>
             <div>
-                <input type="checkbox" id="eliminarEvento" name="permisos[]"
+                <input type="checkbox" id="eliminarEvento" name="eliminarEvento"
                 @if($permiso->eliminarEvento)
                 checked
-                @endif
-                value="eliminarEvento">
+                @endif                >
                 <label for="eliminarEvento">Eliminar Evento</label>
             </div>
             <div>
-                <input type="checkbox" id="darPermisos" name="permisos[]"
+                <input type="checkbox" id="darPermisos" name="darPermisos"
                 @if($permiso->darPermisos)
                 checked
-                @endif
-                value="darPermisos">
+                @endif>
                 <label for="darPermisos">Dar Permisos</label>
             </div>
         </div>

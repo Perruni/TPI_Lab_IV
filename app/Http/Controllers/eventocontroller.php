@@ -222,7 +222,7 @@ class eventocontroller extends Controller
         $permisos = Permiso::where('event_id', $id)
                             ->with('user')
                             ->get();
-        
+                            
         return view('eventoDetallado', [
             'evento' => $evento,
             'permisos' => $permisos,
