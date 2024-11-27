@@ -1,8 +1,10 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-## Link a nuestro MER en el cual hicimos el proyecto
+## Link a nuestro MER y Relacion de tablas de la base de datos.
 
-https://drive.google.com/file/d/1X98CUneXN-AZenW5Lu8JwS7Y2qdXmc1a/view?usp=sharing
+[MER](https://drive.google.com/file/d/1X98CUneXN-AZenW5Lu8JwS7Y2qdXmc1a/view?usp=sharing).
+
+[Relacion de tablas](https://imgur.com/a/GESfQf1).
 
 ## Antes de ejecutar el proyecto
 
