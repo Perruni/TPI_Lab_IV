@@ -49,7 +49,10 @@ class eventocontroller extends Controller
     {
         $categorias = Categoria::all(); 
         
-        $eventos = Evento::filtrarPorCategoria($request->categoria)->get();
+        $eventos = Evento::where('publico' , true)
+                            ->filtrarPorCategoria($request->categoria)
+                            ->with('Categoria')
+                            ->paginate(3);
     
         return view('mostrarEventos', [
             'eventos' => $eventos,
