@@ -63,4 +63,8 @@
   </div>
 @endforeach
 
+<div>
+    {{ $invitaciones->links() }}
+</div>
+
 @endsection 

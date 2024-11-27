@@ -52,7 +52,7 @@ Route::get('/eventos/{id}', [eventoController::class, 'EventoDetallado'])->name(
 Route::get('/buscar-eventos', [eventoController::class, 'buscarEventos'])->name('eventos.buscar');
 Route::post('/eliminar-invitado/{invitacionId}', [eventoController::class, 'eliminarInvitado'])->name('eliminar-invitado');
 
-Route::get('/mostrarEventos', [EventoController::class, 'mostrarEventosView'])->name('mostrarEventos');
+Route::get('/mostrarEventos', [EventoController::class, 'mostrarEventos'])->name('mostrarEventos');
 
 });
 Route::middleware('auth')->group(function () {

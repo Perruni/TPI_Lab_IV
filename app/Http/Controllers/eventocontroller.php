@@ -29,7 +29,7 @@ class eventocontroller extends Controller
         $eventos = Evento::where('user_id', $userId)
             ->orWhereIn('id', $puedeVerEventos)
             ->filtrarPorCategoria($request->categoria) 
-            ->get();
+            ->paginate(10);
 
         $notificaciones = Notificacion::where('user_id', $userId)
             ->where('leido', false)
@@ -162,8 +162,7 @@ class eventocontroller extends Controller
             'descripcion' => $validated['descripcion'],
             'fechaInicio' => $fechaInicioCompleta,
             'fechaFin' => $fechaFinCompleta,
-            'color' => $validated['color'],
-            'publico' => $validated['publico'] ? true : false,
+            'publico' => $request->has('publico') ? true : false,
             'direccion' => $validated['direccion'],
             'latitude' => $validated['latitude'],
             'longitude' => $validated['longitude'],
@@ -211,7 +210,7 @@ class eventocontroller extends Controller
         $eventosQuery->where('categoria_id', $request->categoria_id);
     }
 
-    $eventos = $eventosQuery->get();
+    $eventos = $eventosQuery->paginate(3);
 
     return view('mostrarEventos', compact('eventos', 'categorias'));
     }

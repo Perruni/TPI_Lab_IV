@@ -62,6 +62,11 @@
     </tbody>
 </table>
 
+<div>
+    {{ $eventos->links() }}
+</div>
+
+
   
 <style>
 .evento-actualizacion-formulario {

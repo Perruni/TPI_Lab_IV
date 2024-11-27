@@ -39,6 +39,9 @@
         </div>
     </div>
     @endforeach
+    <div>
+        {{ $eventos->links()}}
+    </div>
 </div>
 
 </div>

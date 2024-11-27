@@ -74,7 +74,8 @@
 
     <div class="form-group">
         <label class="form-label">Dirección</label>
-        <input class= "form-input" type="text" id="autocomplete" name="direccion"></input>        
+        <input class= "form-input" type="text" id="autocomplete" name="direccion"
+        value = "{{ old ('direccion', $evento->direccion) }}" required>
     </div>
 
     <div class="form-group">
@@ -82,8 +83,8 @@
         <div id="mapedit" class="map-container"></div>
     </div>
 
-    <input type="hidden" id="latitud" name="latitude">
-    <input type="hidden" id="longitud" name="longitude">
+    <input type="hidden" id="latitud" name="latitude" value="{{ old('latitude', $evento->latitude) }}">
+    <input type="hidden" id="longitud" name="longitude" value="{{ old('longitude', $evento->longitude) }}">
 
     <div class="d-grid">
         <button type="submit" class="btn btn-primary btn-lg">Actualizar Evento</button>
