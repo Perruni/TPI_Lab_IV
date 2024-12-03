@@ -234,7 +234,7 @@
 
     <!-- Custom js for this page -->
     <script src="{{ asset('assets/js/dashboard.js') }}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ config('app.google_maps.api_key') }}&callback=initMap&libraries=places,marker"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ config('app.google_maps.google_api_key') }}&callback=initMap&libraries=places,marker"></script>
 
     <!-- End custom js for this page -->
 

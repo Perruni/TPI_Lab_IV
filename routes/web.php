@@ -60,7 +60,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/api/google-maps-key', function () {
-    return response()->json(['apiKey' => config('services.google_maps.api_key')]);
+    return response()->json(['apiKey' => config('services.google_maps.google_api_key')]);
 });
 
 use App\Http\Controllers\invitacioncontroller;

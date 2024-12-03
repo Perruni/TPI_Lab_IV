@@ -27,6 +27,8 @@ Para obtener la clave de API, se debe seguir los siguientes pasos:
 
 Para poder ejecutar el proyecto una vez clonado, se debe instalar las dependencias de npm, con el siguiente comando:
 
+composer install
+
 npm install
 
 npm run build
