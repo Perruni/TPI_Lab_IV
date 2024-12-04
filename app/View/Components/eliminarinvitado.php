@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
 
-class eliminarinvitado extends Component
+class Eliminarinvitado extends Component
 {
     /**
      * Create a new component instance.

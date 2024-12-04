@@ -215,7 +215,7 @@ class eventocontroller extends Controller
 
     $eventos = $eventosQuery->paginate(3);
 
-    return view('mostrarEventos', compact('eventos', 'categorias'));
+    return view('mostrareventos', compact('eventos', 'categorias'));
     }
 
     public function EventoDetallado($id)
@@ -225,7 +225,7 @@ class eventocontroller extends Controller
                             ->with('user')
                             ->get();
                             
-        return view('eventoDetallado', [
+        return view('eventodetallado', [
             'evento' => $evento,
             'permisos' => $permisos,
         ]);
@@ -241,7 +241,7 @@ class eventocontroller extends Controller
         })
         ->get();
 
-    return view('buscarEventos', compact('eventos'));
+    return view('buscareventos', compact('eventos'));
 }
 
 

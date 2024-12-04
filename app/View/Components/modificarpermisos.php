@@ -3,7 +3,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class modificarpermisos extends Component
+class Modificarpermisos extends Component
 {
     public $invitadoId;
     public $eventId;
