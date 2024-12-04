@@ -261,7 +261,9 @@ class eventocontroller extends Controller
                         ->where('event_id', $invitacion->event_id)
                         ->first();
 
-        if (!$permiso || !$permiso->eliminarIvitado || $userId === $permiso->user_id) {
+        $event = Evento::findOrFail($invitacion->event_id);
+
+        if ($userId !== $event->user_id && (!$permiso || !$permiso->eliminarIvitado)) {
             abort(403, 'No tienes permiso para modificar esta invitación.');
         }
 
