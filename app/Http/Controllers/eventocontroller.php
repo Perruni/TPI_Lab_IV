@@ -54,7 +54,7 @@ class eventocontroller extends Controller
                             ->with('Categoria')
                             ->paginate(3);
     
-        return view('mostrarEventos', [
+        return view('mostrareventos', [
             'eventos' => $eventos,
             'categorias' => $categorias, 
         ]);
