@@ -198,7 +198,7 @@ class eventocontroller extends Controller
                     ->orWhereIn('id', $puedeVerEventos)
                     ->get();          
 
-        return view('fullCalendar',['eventos'=> $eventos]);
+        return view('fullcalendar',['eventos'=> $eventos]);
 
     }
     

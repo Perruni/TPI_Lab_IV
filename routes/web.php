@@ -24,10 +24,6 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/fullcalendar', function () {
-    return view('fullcalendar');
-});
-
 
 use App\Http\Controllers\permisoscontroller;
 
